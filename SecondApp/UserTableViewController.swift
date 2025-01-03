@@ -10,10 +10,22 @@ import Kingfisher
 
 class UserTableViewController: UITableViewController {
     
-    let friends = FriendsInfo().list
+    var friends = FriendsInfo().list
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    @objc func likeButtonTapped(_ sender: UIButton) {
+        print(#function, sender.tag)
+        
+        // 원래는 indexPath.row를 이용하고 싶었는데 그 매개변수는 cellForRowAt함수에서 사용 가능
+        // 여기서는 마침 sender.tag와 값이 일치하기 때문에, 해당 값을 사용
+        friends[sender.tag].like.toggle()
+        print(friends[sender.tag].like)
+        
+        // 잊지말자 reloadData!! 데이터와 뷰는 따로논다!!!!!!!!!!!!!!
+        tableView.reloadData()
     }
     
     // cell의 개수
@@ -51,6 +63,12 @@ class UserTableViewController: UITableViewController {
         let name = row.like ? "heart.fill" : "heart"
         let btn = UIImage(systemName: name)
         cell.likeButton.setImage(btn, for: .normal)
+        
+        // 좋아요 버튼에 액션 지정
+        // 1. 버튼을 구분짓기 위해서 tag를 분류
+        cell.likeButton.tag = indexPath.row
+        // 2. IBAction 대신 코드로 액션 연결
+        cell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         
         return cell
     }

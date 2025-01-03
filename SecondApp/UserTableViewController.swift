@@ -7,9 +7,23 @@
 
 import UIKit
 
+struct Friend {
+    let name: String
+    let message: String
+    let profile_image: String
+}
+
 class UserTableViewController: UITableViewController {
     
-    let name = ["고래밥", "칙촉", "카스타드"]
+    let friends = [
+        Friend(name: "고래밥", message: "안녕하세요", profile_image: "star"),
+        Friend(name: "칙촉", message: "오늘 너무 추워요", profile_image: "pencil"),
+        Friend(name: "카스타드", message: "메롱티비", profile_image: "star.fill")
+    ]
+    
+//    let name = ["고래밥", "칙촉", "카스타드"]
+//    let message = ["안녕하세요", "오늘 너무 추워요", "메롱티비"]
+//    let profile = ["star", "pencil", "star.fill"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,18 +32,22 @@ class UserTableViewController: UITableViewController {
     
     // cell의 개수
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return name.count
+        return friends.count
     }
     
     // cell의 디자인과 데이터
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // 이번에 for을 쓴 이유: custom cell이기 때문에 어떤 위치의 cell인지 확인하기 위함
-        let cell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as! UserTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UserTableViewCell", for: indexPath) as! UserTableViewCell
         
         cell.profileImageView.backgroundColor = .brown
-        cell.nameLabel.text = name[indexPath.row]
-        cell.messageLabel.text = "상태메세지"
+        
+        let image = friends[indexPath.row].profile_image
+        cell.profileImageView.image = UIImage(systemName: image)
+        
+        cell.nameLabel.text = friends[indexPath.row].name
+        cell.messageLabel.text = friends[indexPath.row].message
         
         cell.nameLabel.font = .boldSystemFont(ofSize: 30)
         cell.messageLabel.font = .systemFont(ofSize: 20)

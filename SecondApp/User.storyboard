@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ARo-xc-O2Z">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="userCell" rowHeight="129" id="Le2-Lg-3Tr" customClass="UserTableViewCell" customModule="SecondApp" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserTableViewCell" rowHeight="129" id="Le2-Lg-3Tr" customClass="UserTableViewCell" customModule="SecondApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="393" height="129"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Le2-Lg-3Tr" id="Lt7-VI-EHO">
@@ -45,14 +45,6 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="poT-E1-kPr" secondAttribute="trailing" id="8vz-di-oiC"/>
-                                                <constraint firstAttribute="trailing" secondItem="rED-0j-edT" secondAttribute="trailing" id="BkK-eN-7Oy"/>
-                                                <constraint firstItem="rED-0j-edT" firstAttribute="top" secondItem="fEX-7E-r8n" secondAttribute="top" id="Lck-vg-PzW"/>
-                                                <constraint firstItem="poT-E1-kPr" firstAttribute="leading" secondItem="fEX-7E-r8n" secondAttribute="leading" id="gs1-ty-vd0"/>
-                                                <constraint firstItem="rED-0j-edT" firstAttribute="leading" secondItem="fEX-7E-r8n" secondAttribute="leading" id="rTf-n8-7NS"/>
-                                                <constraint firstAttribute="bottom" secondItem="poT-E1-kPr" secondAttribute="bottom" id="sw9-Js-qwS"/>
-                                            </constraints>
                                         </stackView>
                                     </subviews>
                                     <constraints>

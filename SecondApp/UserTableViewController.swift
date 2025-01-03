@@ -6,28 +6,14 @@
 //
 
 import UIKit
-
-struct Friend {
-    let name: String
-    let message: String
-    let profile_image: String
-}
+import Kingfisher
 
 class UserTableViewController: UITableViewController {
     
-    let friends = [
-        Friend(name: "고래밥", message: "안녕하세요", profile_image: "star"),
-        Friend(name: "칙촉", message: "오늘 너무 추워요", profile_image: "pencil"),
-        Friend(name: "카스타드", message: "메롱티비", profile_image: "star.fill")
-    ]
-    
-//    let name = ["고래밥", "칙촉", "카스타드"]
-//    let message = ["안녕하세요", "오늘 너무 추워요", "메롱티비"]
-//    let profile = ["star", "pencil", "star.fill"]
+    let friends = FriendsInfo().list
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
     // cell의 개수
@@ -40,17 +26,31 @@ class UserTableViewController: UITableViewController {
         
         // 이번에 for을 쓴 이유: custom cell이기 때문에 어떤 위치의 cell인지 확인하기 위함
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserTableViewCell", for: indexPath) as! UserTableViewCell
+        // 반복되는 코드를 row로 만들어놓음
+        let row = friends[indexPath.row]
         
         cell.profileImageView.backgroundColor = .brown
         
-        let image = friends[indexPath.row].profile_image
-        cell.profileImageView.image = UIImage(systemName: image)
+        // kf와 옵셔널 처리
+        let image = row.profile_image
         
-        cell.nameLabel.text = friends[indexPath.row].name
-        cell.messageLabel.text = friends[indexPath.row].message
+        if let image {
+            let url = URL(string: image)
+            cell.profileImageView.kf.setImage(with: url)
+        } else {
+            cell.profileImageView.image = UIImage(systemName: "person")
+        }
+        
+        cell.nameLabel.text = row.name
+        cell.messageLabel.text = row.message
         
         cell.nameLabel.font = .boldSystemFont(ofSize: 30)
         cell.messageLabel.font = .systemFont(ofSize: 20)
+        
+        // 좋아요 버튼의 이미지
+        let name = row.like ? "heart.fill" : "heart"
+        let btn = UIImage(systemName: name)
+        cell.likeButton.setImage(btn, for: .normal)
         
         return cell
     }

@@ -14,6 +14,7 @@ class ShowViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(#function)
         view.backgroundColor = colorList.randomElement()!
         // 어떤 VC인지 구분하기 위해 self 붙여줌
         print(self, #function)

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class UserTableViewController: UITableViewController {
     
@@ -25,7 +24,9 @@ class UserTableViewController: UITableViewController {
         print(friends[sender.tag].like)
         
         // 잊지말자 reloadData!! 데이터와 뷰는 따로논다!!!!!!!!!!!!!!
-        tableView.reloadData()
+//        tableView.reloadData()
+        
+        tableView.reloadRows(at: [IndexPath(row: sender.tag, section: 0)], with: .fade)
     }
     
     // cell의 개수
@@ -41,28 +42,7 @@ class UserTableViewController: UITableViewController {
         // 반복되는 코드를 row로 만들어놓음
         let row = friends[indexPath.row]
         
-        cell.profileImageView.backgroundColor = .brown
-        
-        // kf와 옵셔널 처리
-        let image = row.profile_image
-        
-        if let image {
-            let url = URL(string: image)
-            cell.profileImageView.kf.setImage(with: url)
-        } else {
-            cell.profileImageView.image = UIImage(systemName: "person")
-        }
-        
-        cell.nameLabel.text = row.name
-        cell.messageLabel.text = row.message
-        
-        cell.nameLabel.font = .boldSystemFont(ofSize: 30)
-        cell.messageLabel.font = .systemFont(ofSize: 20)
-        
-        // 좋아요 버튼의 이미지
-        let name = row.like ? "heart.fill" : "heart"
-        let btn = UIImage(systemName: name)
-        cell.likeButton.setImage(btn, for: .normal)
+        cell.configureData(row: row)
         
         // 좋아요 버튼에 액션 지정
         // 1. 버튼을 구분짓기 위해서 tag를 분류

@@ -14,15 +14,22 @@ class UserTableViewCell: UITableViewCell {
     @IBOutlet var messageLabel: UILabel!
     @IBOutlet var likeButton: UIButton!
     
+    // 스토리보드 파일이 있을때만 실행
     override func awakeFromNib() {
         super.awakeFromNib()
+        print(#function)
         
+        configure()
     }
     
-    func configureData(row: Friends) {
+    func configure() {
         profileImageView.backgroundColor = .brown
         nameLabel.font = .boldSystemFont(ofSize: 30)
         messageLabel.font = .systemFont(ofSize: 20)
+    }
+    
+    func configureData(row: Friends) {
+        print(#function)
         
         nameLabel.text = row.name
         messageLabel.text = row.message

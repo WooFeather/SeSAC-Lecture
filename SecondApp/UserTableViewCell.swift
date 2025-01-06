@@ -9,9 +9,9 @@ import UIKit
 import Kingfisher
 
 class UserTableViewCell: UITableViewCell {
-    @IBOutlet var profileImageView: UIImageView!
-    @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var messageLabel: UILabel!
+    @IBOutlet private var profileImageView: UIImageView!
+    @IBOutlet private var nameLabel: UILabel!
+    @IBOutlet private var messageLabel: UILabel!
     @IBOutlet var likeButton: UIButton!
     
     // 스토리보드 파일이 있을때만 실행
@@ -22,7 +22,7 @@ class UserTableViewCell: UITableViewCell {
         configure()
     }
     
-    func configure() {
+    private func configure() {
         profileImageView.backgroundColor = .brown
         nameLabel.font = .boldSystemFont(ofSize: 30)
         messageLabel.font = .systemFont(ofSize: 20)

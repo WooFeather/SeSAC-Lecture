@@ -22,6 +22,12 @@ class UserTableViewCell: UITableViewCell {
         configure()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        print(#function)
+        profileImageView.image = UIImage(systemName: "person")
+    }
+    
     private func configure() {
         profileImageView.backgroundColor = .brown
         nameLabel.font = .boldSystemFont(ofSize: 30)
@@ -38,9 +44,10 @@ class UserTableViewCell: UITableViewCell {
         if let image {
             let url = URL(string: image)
             profileImageView.kf.setImage(with: url)
-        } else {
-            profileImageView.image = UIImage(systemName: "person")
         }
+//        else {
+//            profileImageView.image = UIImage(systemName: "person")
+//        }
         
         let name = row.like ? "heart.fill" : "heart"
         let btn = UIImage(systemName: name)

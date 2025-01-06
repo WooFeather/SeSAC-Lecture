@@ -14,9 +14,9 @@ class UserTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Xib cell
-        let nib = UINib(nibName: "NoProfileViewCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "NoProfileViewCell")
+//        // Xib cell
+//        let nib = UINib(nibName: "NoProfileViewCell", bundle: nil)
+//        tableView.register(nib, forCellReuseIdentifier: "NoProfileViewCell")
     }
     
     @objc func likeButtonTapped(_ sender: UIButton) {
@@ -42,17 +42,17 @@ class UserTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // 이번에 for을 쓴 이유: custom cell이기 때문에 어떤 위치의 cell인지 확인하기 위함
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NoProfileViewCell", for: indexPath) as! NoProfileViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UserTableViewCell", for: indexPath) as! UserTableViewCell
         // 반복되는 코드를 row로 만들어놓음
         let row = friends[indexPath.row]
         
-//        cell.configureData(row: row)
-//        
-//        // 좋아요 버튼에 액션 지정
-//        // 1. 버튼을 구분짓기 위해서 tag를 분류
-//        cell.likeButton.tag = indexPath.row
-//        // 2. IBAction 대신 코드로 액션 연결
-//        cell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+        cell.configureData(row: row)
+        
+        // 좋아요 버튼에 액션 지정
+        // 1. 버튼을 구분짓기 위해서 tag를 분류
+        cell.likeButton.tag = indexPath.row
+        // 2. IBAction 대신 코드로 액션 연결
+        cell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         
         return cell
     }

@@ -32,6 +32,7 @@ class UserTableViewCell: UITableViewCell {
         profileImageView.backgroundColor = .brown
         nameLabel.font = .boldSystemFont(ofSize: 30)
         messageLabel.font = .systemFont(ofSize: 20)
+        messageLabel.numberOfLines = 0
     }
     
     func configureData(row: Friends) {

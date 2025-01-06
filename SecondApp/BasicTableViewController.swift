@@ -9,7 +9,12 @@ import UIKit
 
 class BasicTableViewController: UITableViewController {
     
-    var list = ["프로젝트", "메인 업무", "새싹 과제", "코코딩딩"] {
+    var list = [
+        "프로젝트프로젝트프로젝트프로젝트프로젝트프로젝트프로젝트프로젝트프로젝트프로젝트프로젝트프로젝트프로젝트프로젝트프로젝트프로젝트프로젝트",
+        "메인 업무메인 업무메인 업무메인 업무메인 업무메인 업무메인 업무메인 업무메인 업무메인 업무메인 업무메인 업무메인 업무메인 업무메인 업무메인 업무메인 업무메인 업무",
+        "새싹 과제새싹 과",
+        "코코딩코코딩"
+    ] {
         didSet {
             tableView.reloadData()
         }
@@ -23,7 +28,7 @@ class BasicTableViewController: UITableViewController {
 //        var monster = Monster()
         
         
-        tableView.rowHeight = 80
+        tableView.rowHeight = UITableView.automaticDimension
     }
     
     @IBAction func randomButtonTapped(_ sender: UIBarButtonItem) {
@@ -54,6 +59,7 @@ class BasicTableViewController: UITableViewController {
         // cell이 옵셔널인 이유: identifire를 잘못 입력해서, 구분자를 찾을 수 없을 때를 대비
         // 위의dequeueReusableCell 부분에 !를 치면 됨
         // textLabel이 옵셔널인 이유: Style에 따라 없을수도 있는 텍스트
+        cell.textLabel?.numberOfLines = 0
         cell.textLabel?.text = "텍스트 레이블"
         
         // extension 활용!

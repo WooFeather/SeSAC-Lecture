@@ -41,8 +41,8 @@ class UserTableViewController: UITableViewController {
     // cell의 디자인과 데이터
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        // 이번에 for을 쓴 이유: custom cell이기 때문에 어떤 위치의 cell인지 확인하기 위함
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UserTableViewCell", for: indexPath) as! UserTableViewCell
+        // UserTableViewCell의 인스턴스
+        let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.identifier, for: indexPath) as! UserTableViewCell
         // 반복되는 코드를 row로 만들어놓음
         let row = friends[indexPath.row]
         

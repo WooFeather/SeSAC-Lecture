@@ -13,6 +13,14 @@ struct Friends {
     let profile_image: String?
     let phone: Int?
     var like: Bool
+    
+    // 등호 없는 연산 프로퍼티(터널같은 친구)
+    // 메모리 공간을 차지하지 않음
+    var nameDescription: String {
+        get {
+            return "이름: \(name), \(message?.count ?? 0)글자 작성"
+        }
+    }
 }
 
 struct FriendsInfo {

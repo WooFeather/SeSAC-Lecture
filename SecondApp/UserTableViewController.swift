@@ -30,7 +30,14 @@ class UserTableViewController: UITableViewController {
     // 셀의 버튼과 다르게 항상 똑같은 버튼을 탭하는 거기 때문에 매개변수 안넣어줌
     @objc
     func rightButtonTapped() {
-        print(#function)
+        // 1. (가지고 올 VC가 담겨있는)스토리보드 특정 ex. User
+        let sb = UIStoryboard(name: "User", bundle: nil)
+        
+        // 2. 전환할 뷰컨트롤러를 가져오기 ex. BrownVC
+        let vc = sb.instantiateViewController(withIdentifier: "GrayViewController") as! GrayViewController
+        
+        // 3. 화면을 전환할 방법 선택하기 - 우측에서 등장 / IB: show / 전제조건: Navi / Code: push
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc
@@ -78,8 +85,10 @@ class UserTableViewController: UITableViewController {
         let sb = UIStoryboard(name: "User", bundle: nil)
         
         // 2. 전환할 뷰컨트롤러를 가져오기 ex. BrownVC
-        
         let vc = sb.instantiateViewController(withIdentifier: "BrownViewController") as! BrownViewController
+        
+        vc.modalPresentationStyle = .fullScreen // 아래에서 위로 뜰 때 방식
+        vc.modalTransitionStyle = .crossDissolve  // 전환 애니메이션
         
         // 3. 화면을 전환할 방법 선택하기 - 아래에서 위로 / IB: modal / Code: present(Alert에서 사용한 메서드와 동일)
         present(vc, animated: true)

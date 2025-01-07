@@ -105,6 +105,24 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rjt-O5-njJ">
+                                <rect key="frame" x="121" y="479" width="54" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Pop"/>
+                                <connections>
+                                    <action selector="popButtonTapped:" destination="KWp-De-X5b" eventType="touchUpInside" id="TwU-Hn-8F5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PT0-1j-30H">
+                                <rect key="frame" x="202" y="478" width="84" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Dismiss"/>
+                                <connections>
+                                    <action selector="dismissBruttonTapped:" destination="KWp-De-X5b" eventType="touchUpInside" id="WU3-GB-uJD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="RM8-uS-cUa"/>
                         <color key="backgroundColor" systemColor="systemBrownColor"/>
@@ -125,11 +143,39 @@
                     <view key="view" contentMode="scaleToFill" id="vce-ft-H3w">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gk2-y5-8rt">
+                                <rect key="frame" x="169.66666666666666" y="408.66666666666669" width="54" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Pop"/>
+                                <connections>
+                                    <action selector="popButtonTapped:" destination="szi-Qf-ars" eventType="touchUpInside" id="UTe-zt-zpr"/>
+                                    <action selector="popButtonTapped:" destination="2pz-rS-T6L" eventType="touchUpInside" id="kLS-RT-5fC"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnU-KJ-u5S">
+                                <rect key="frame" x="154" y="473.66666666666669" width="85" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Dismiss"/>
+                                <connections>
+                                    <action selector="dismissButtonTapped:" destination="2pz-rS-T6L" eventType="touchUpInside" id="4Iv-m3-5wx"/>
+                                    <action selector="dismissButtonTapped:" destination="szi-Qf-ars" eventType="touchUpInside" id="obM-RX-WdA"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="Wlk-Fx-mqn"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Gk2-y5-8rt" firstAttribute="centerY" secondItem="vce-ft-H3w" secondAttribute="centerY" id="9RT-wN-5k0"/>
+                            <constraint firstItem="dnU-KJ-u5S" firstAttribute="leading" secondItem="Wlk-Fx-mqn" secondAttribute="leading" constant="154" id="Vp4-gc-Y56"/>
+                            <constraint firstItem="Wlk-Fx-mqn" firstAttribute="trailing" secondItem="dnU-KJ-u5S" secondAttribute="trailing" constant="154" id="Ywb-vZ-pMw"/>
+                            <constraint firstItem="Gk2-y5-8rt" firstAttribute="centerX" secondItem="vce-ft-H3w" secondAttribute="centerX" id="kZO-qa-NC7"/>
+                            <constraint firstItem="dnU-KJ-u5S" firstAttribute="top" secondItem="Gk2-y5-8rt" secondAttribute="bottom" constant="30" id="mef-X9-BMw"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ctn-rr-VJc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="2pz-rS-T6L" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2733.5877862595421" y="-80.281690140845072"/>
         </scene>

@@ -57,6 +57,23 @@ class UserTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(#function, indexPath.row)
+        // 1. (가지고 올 VC가 담겨있는)스토리보드 특정 ex. User
+        let sb = UIStoryboard(name: "User", bundle: nil)
+        
+        // 2. 전환할 뷰컨트롤러를 가져오기 ex. BrownVC
+        
+        let vc = sb.instantiateViewController(withIdentifier: "BrownViewController") as! BrownViewController
+        
+        // 3. 화면을 전환할 방법 선택하기 - 아래에서 위로 / IB: modal / Code: present(Alert에서 사용한 메서드와 동일)
+        present(vc, animated: true)
+        
+        tableView.reloadRows(at: [indexPath], with: .fade)
+    }
+    
+    
+    
     // cell의 높이
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension

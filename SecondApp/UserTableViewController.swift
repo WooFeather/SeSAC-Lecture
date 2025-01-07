@@ -14,12 +14,27 @@ class UserTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = "타이틀"
+        
+        // 코드가 너무 길면 이렇게 하기도 함
+        let star = UIImage(systemName: "star")
+        let right = UIBarButtonItem(image: star, style: .plain, target: self, action: #selector(rightButtonTapped))
+        navigationItem.rightBarButtonItem = right
+        
+        
 //        // Xib cell
 //        let nib = UINib(nibName: "NoProfileViewCell", bundle: nil)
 //        tableView.register(nib, forCellReuseIdentifier: "NoProfileViewCell")
     }
     
-    @objc func likeButtonTapped(_ sender: UIButton) {
+    // 셀의 버튼과 다르게 항상 똑같은 버튼을 탭하는 거기 때문에 매개변수 안넣어줌
+    @objc
+    func rightButtonTapped() {
+        print(#function)
+    }
+    
+    @objc
+    func likeButtonTapped(_ sender: UIButton) {
         print(#function, sender.tag)
         
         // 원래는 indexPath.row를 이용하고 싶었는데 그 매개변수는 cellForRowAt함수에서 사용 가능

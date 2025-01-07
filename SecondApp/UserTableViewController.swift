@@ -33,8 +33,9 @@ class UserTableViewController: UITableViewController {
         // 1. (가지고 올 VC가 담겨있는)스토리보드 특정 ex. User
         let sb = UIStoryboard(name: "User", bundle: nil)
         
-        // 2. 전환할 뷰컨트롤러를 가져오기 ex. BrownVC
-        let vc = sb.instantiateViewController(withIdentifier: "GrayViewController") as! GrayViewController
+        // 같은 스토리보드에서 이동한다면 내가 속한 스토리보드를 확인하고 거기서 바로 작업 가능
+        // 나 어떤 스토리보드에 속해있지? => User storyboard에 있다는 것을 앎
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "GrayViewController") as! GrayViewController
         
         // 3. 화면을 전환할 방법 선택하기 - 우측에서 등장 / IB: show / 전제조건: Navi / Code: push
         navigationController?.pushViewController(vc, animated: true)

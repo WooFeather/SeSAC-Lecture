@@ -22,10 +22,20 @@ class TenCollectionViewController: UIViewController, UICollectionViewDelegate, U
         // 4. 부하직원하고 연결
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        // 레이아웃 설정
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: 100, height: 100)
+        layout.minimumLineSpacing = 20 // 셀의 아래위 간격
+        layout.minimumInteritemSpacing = 20 // 셀의 양 옆 간격
+        layout.sectionInset = UIEdgeInsets(top: 100, left: 50, bottom: 100, right: 50)
+        
+        collectionView.collectionViewLayout = layout
     }
     
     // 3. 필수 기능(1)
-    func collectionView(_ collectionView: UIColluectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 100
     }
     

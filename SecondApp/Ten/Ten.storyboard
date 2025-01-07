@@ -130,6 +130,9 @@
                             <constraint firstItem="MLU-tZ-Lzs" firstAttribute="top" secondItem="Taz-hL-yZA" secondAttribute="top" id="sVm-DZ-ffD"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="MLU-tZ-Lzs" id="5iu-me-EbJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jDR-dR-U1c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

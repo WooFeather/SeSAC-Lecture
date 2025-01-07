@@ -87,11 +87,14 @@ class UserTableViewController: UITableViewController {
         // 2. 전환할 뷰컨트롤러를 가져오기 ex. BrownVC
         let vc = sb.instantiateViewController(withIdentifier: "BrownViewController") as! BrownViewController
         
-        vc.modalPresentationStyle = .fullScreen // 아래에서 위로 뜰 때 방식
-        vc.modalTransitionStyle = .crossDissolve  // 전환 애니메이션
+        // (옵션2) present이지만, navi title도 쓰고 싶다면, 다시 네비게이션 컨트롤러를 임베드해서, 네비게이션 컨트롤러를 present
+        let nav = UINavigationController(rootViewController: vc)
+        
+        nav.modalPresentationStyle = .fullScreen // 아래에서 위로 뜰 때 방식
+        nav.modalTransitionStyle = .crossDissolve  // 전환 애니메이션
         
         // 3. 화면을 전환할 방법 선택하기 - 아래에서 위로 / IB: modal / Code: present(Alert에서 사용한 메서드와 동일)
-        present(vc, animated: true)
+        present(nav, animated: true)
         
         tableView.reloadRows(at: [indexPath], with: .fade)
     }

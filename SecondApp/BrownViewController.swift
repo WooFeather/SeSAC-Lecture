@@ -12,6 +12,7 @@ class BrownViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.title = "안녕"
     }
     
     @IBAction func popButtonTapped(_ sender: UIButton) {

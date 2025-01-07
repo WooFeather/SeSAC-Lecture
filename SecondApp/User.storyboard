@@ -131,6 +131,9 @@
                             <constraint firstItem="61f-OG-1xm" firstAttribute="centerY" secondItem="hUq-NQ-iJn" secondAttribute="centerY" id="uG3-fp-jzW"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="testLabel" destination="61f-OG-1xm" id="C2a-XN-zvF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bah-8U-VqN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

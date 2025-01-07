@@ -86,6 +86,10 @@ class UserTableViewController: UITableViewController {
         
         // 2. 전환할 뷰컨트롤러를 가져오기 ex. BrownVC
         let vc = sb.instantiateViewController(withIdentifier: "BrownViewController") as! BrownViewController
+//        vc.testLabel.text = "고래밥"   // 값 전달할 땐 Outlet을 사용할 순 없음
+        
+        // 2. pass Data - vc가 갖고 있는 프로퍼티에 데이터 추가
+        vc.contents = friends[indexPath.row].name
         
         // (옵션2) present이지만, navi title도 쓰고 싶다면, 다시 네비게이션 컨트롤러를 임베드해서, 네비게이션 컨트롤러를 present
         let nav = UINavigationController(rootViewController: vc)

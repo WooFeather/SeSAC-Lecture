@@ -5,7 +5,10 @@
 //  Created by 조우현 on 1/13/25.
 //
 
+// Right To Left, Left to Right
+
 import UIKit
+import SnapKit
 
 /*
  1. 스토리보드에서 객체 얹기
@@ -20,13 +23,33 @@ class ViewController: UIViewController {
     let passwordTextField = UITextField()
     let nameTextField = UITextField()
     
+    let redView = UIView()
+    let greenView = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         layoutAnchor()
         autoLayoutConstraints()
         frameBasedLayout()
+        autoLayoutSnapKit()
+    }
+    
+    func autoLayoutSnapKit() {
+        view.addSubview(redView)
+        view.addSubview(greenView)
+        
+        redView.backgroundColor = .red
+        greenView.backgroundColor = .green
+        
+        redView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        greenView.snp.makeConstraints { make in
+            make.center.equalTo(view.safeAreaLayoutGuide)
+            make.size.equalTo(200)
+        }
     }
     
     func layoutAnchor() {

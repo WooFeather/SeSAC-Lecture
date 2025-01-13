@@ -27,14 +27,42 @@ class ViewController: UIViewController {
     let greenView = UIView()
     let grayView = UIView()
     
+    lazy var button = {
+        print("Button Button Button")
+        let btn = UIButton()
+        btn.setTitle("다음", for: .normal)
+        btn.backgroundColor = .brown
+        btn.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+        
+        return btn
+    }()
+    
+    @objc
+    func nextButtonTapped() {
+        print(#function)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("viewDidLoad")
         
+        buttonConfig()
         layoutAnchor()
         autoLayoutConstraints()
         frameBasedLayout()
 //        autoLayoutSnapKit()
         autoLayoutSnapKit2()
+    }
+    
+    func buttonConfig() {
+        view.addSubview(button)
+        
+        button.snp.makeConstraints { make in
+            make.height.equalTo(50)
+            make.width.equalTo(300)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(200)
+            make.centerX.equalTo(view.safeAreaLayoutGuide)
+        }
     }
     
     func autoLayoutSnapKit2() {

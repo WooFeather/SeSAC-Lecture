@@ -18,60 +18,29 @@ class ViewController: UIViewController {
     // 1. 뷰 객체 프로퍼티 선언
     let emailTextField = UITextField()
     let passwordTextField = UITextField()
+    let nameTextField = UITextField()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(passwordTextField)
-        // 오토리사이징으로 제약사항 잡을겨? => 아뇨 저는 오토레이아웃으로 할건데요
-        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         
-        let top = NSLayoutConstraint(
-            item: passwordTextField,
-            attribute: .top,
-            relatedBy: .equal,
-            toItem: view.safeAreaLayoutGuide,
-            attribute: .top,
-            multiplier: 1,
-            constant: 50
-        )
+        layoutAnchor()
+        autoLayoutConstraints()
+        frameBasedLayout()
+    }
+    
+    func layoutAnchor() {
+        view.addSubview(nameTextField)
+        nameTextField.translatesAutoresizingMaskIntoConstraints = false
         
-        // top 레이아웃을 적용해주세요
-        top.isActive = true
+        NSLayoutConstraint.activate([
+            nameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            nameTextField.widthAnchor.constraint(equalToConstant: 300),
+            nameTextField.heightAnchor.constraint(equalToConstant: 50),
+            nameTextField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
         
-        NSLayoutConstraint(
-            item: passwordTextField,
-            attribute: .leading,
-            relatedBy: .equal,
-            toItem: view,
-            attribute: .leading,
-            multiplier: 1,
-            constant: 40
-        ).isActive = true
-        
-        NSLayoutConstraint(
-            item: passwordTextField,
-            attribute: .trailing,
-            relatedBy: .equal,
-            toItem: view,
-            attribute: .trailing,
-            multiplier: 1,
-            constant: -40
-        ).isActive = true
-        
-        NSLayoutConstraint(
-            item: passwordTextField,
-            attribute: .height,
-            relatedBy: .equal,
-            toItem: nil,
-            attribute: .height,
-            multiplier: 1,
-            constant: 50
-        ).isActive = true
-        
-        passwordTextField.backgroundColor = .red
-        
-//        frameBasedLayout()
+        nameTextField.backgroundColor = .green
     }
     
     func frameBasedLayout() {
@@ -82,6 +51,24 @@ class ViewController: UIViewController {
         emailTextField.frame = CGRect(x: 50, y: 100, width: 293, height: 50)
         // 4. 뷰 속성 조절
         emailTextField.backgroundColor = .lightGray
+    }
+    
+    func autoLayoutConstraints() {
+        view.addSubview(passwordTextField)
+        // 오토리사이징으로 제약사항 잡을겨? => 아뇨 저는 오토레이아웃으로 할건데요
+        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
+        
+        let top = NSLayoutConstraint(item: passwordTextField, attribute: .top, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 50)
+        
+        let leading = NSLayoutConstraint(item: passwordTextField, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 40)
+        
+        let trailing = NSLayoutConstraint(item: passwordTextField, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -40)
+        
+        let height = NSLayoutConstraint(item: passwordTextField, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 50)
+        
+        view.addConstraints([top, leading, trailing, height])
+        
+        passwordTextField.backgroundColor = .red
     }
 }
 

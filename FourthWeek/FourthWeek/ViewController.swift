@@ -25,6 +25,7 @@ class ViewController: UIViewController {
     
     let redView = UIView()
     let greenView = UIView()
+    let grayView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,22 +33,56 @@ class ViewController: UIViewController {
         layoutAnchor()
         autoLayoutConstraints()
         frameBasedLayout()
-        autoLayoutSnapKit()
+//        autoLayoutSnapKit()
+        autoLayoutSnapKit2()
+    }
+    
+    func autoLayoutSnapKit2() {
+        view.addSubview(redView)
+        view.addSubview(grayView)
+        redView.addSubview(greenView)
+        
+        redView.backgroundColor = .red
+        grayView.backgroundColor = .gray
+        greenView.backgroundColor = .green
+        
+        redView.snp.makeConstraints { make in
+            make.size.equalTo(200)
+            make.center.equalToSuperview()
+        }
+        
+        greenView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        grayView.snp.makeConstraints { make in
+            make.edges.equalTo(redView).inset(50)
+        }
     }
     
     func autoLayoutSnapKit() {
         view.addSubview(redView)
         view.addSubview(greenView)
+        view.addSubview(grayView)
         
         redView.backgroundColor = .red
         greenView.backgroundColor = .green
+        grayView.backgroundColor = .gray
         
         redView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.edges.equalTo(view.safeAreaLayoutGuide).inset(50)
+//            make.top.leading.equalTo(view.safeAreaLayoutGuide).offset(50)
+//            make.bottom.trailing.equalTo(view.safeAreaLayoutGuide).offset(-50)
         }
         
         greenView.snp.makeConstraints { make in
             make.center.equalTo(view.safeAreaLayoutGuide)
+            make.size.equalTo(200)
+        }
+        
+        grayView.snp.makeConstraints { make in
+            make.top.equalTo(greenView.snp.bottom).offset(50)
+            make.centerX.equalTo(greenView.snp.centerX).offset(-100)
             make.size.equalTo(200)
         }
     }

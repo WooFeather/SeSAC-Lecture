@@ -40,6 +40,8 @@ class ViewController: UIViewController {
     @objc
     func nextButtonTapped() {
         print(#function)
+        let vc = BookViewController()
+        present(vc, animated: true)
     }
     
     override func viewDidLoad() {

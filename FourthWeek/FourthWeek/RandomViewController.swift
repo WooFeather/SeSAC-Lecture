@@ -7,6 +7,12 @@
 
 import UIKit
 import SnapKit
+import Alamofire
+
+struct Dog: Decodable {
+    let message: String
+    let status: String
+}
 
 // 클래스에서만 사용되도록 제약사항 설정 => AnyObject(예전엔 class라고 쓰기도 했음)
 protocol ViewConfiguration: AnyObject {
@@ -66,6 +72,19 @@ class RandomViewController: UIViewController, ViewConfiguration {
     
     @objc
     func randomButtonTapped() {
-        print(#function)
+        // 버튼 누르면 랜덤으로 강아지 나오게
+        // 크옴에서 엔터키 눌렀을 때처럼 요청하는 부분
+        
+        let url = "https://dog.ceo/api/breeds/image/random"
+        // method: 프로퍼티는 .get이 기본값 => get일경우에 안써줘도 됨
+        AF.request(url, method: .get).responseDecodable(of: Dog.self) { response in
+            switch response.result {
+            case .success(let value):
+                print(value.message)
+                print(value.status)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }

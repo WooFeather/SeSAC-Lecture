@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Alamofire
+import Kingfisher
 import SnapKit
 
 class KakaoBookSearchViewController: UIViewController {
@@ -13,7 +15,7 @@ class KakaoBookSearchViewController: UIViewController {
     let searchBar = UISearchBar()
     let tableView = UITableView()
     
-    let list = Array(1...100)
+    var list: [Book.BookDetail] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +23,6 @@ class KakaoBookSearchViewController: UIViewController {
         configureView()
         configureSearchBar()
         configureTableView()
-        
     }
     
     func configureView() {
@@ -47,23 +48,49 @@ class KakaoBookSearchViewController: UIViewController {
             make.top.equalTo(searchBar.snp.bottom)
         }
         
+        tableView.keyboardDismissMode = .onDrag
         tableView.rowHeight = 120
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(KakaoBookSearchTableViewCell.self, forCellReuseIdentifier: KakaoBookSearchTableViewCell.id)
-
     }
-    
-
-
+    /*
+     1. 검색어
+     2. 이미지
+     3. 이미 검색어에 대한 결과가 나와있는 상태에서 동일한 요청을 하면?
+     */
+    func callRequest(query: String) {
+        print(#function)
+        
+        let url = "https://dapi.kakao.com/v3/search/book?query=\(query)"
+        let header: HTTPHeaders = [
+            "Authorization": APIKey.kakao
+        ]
+        AF.request(url, method: .get, headers: header)
+            .validate(statusCode: 200..<300)
+            .responseDecodable(of: Book.self) { response in
+                
+                print(response.response?.statusCode)
+                
+            switch response.result {
+            case .success(let value):
+                print("✅SUCCESS")
+                self.list = value.documents
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }
 
 extension KakaoBookSearchViewController: UISearchBarDelegate {
-
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print(#function)
+        if let searchText = searchBar.text {
+            callRequest(query: searchText)
+        }
     }
-    
 }
 
 
@@ -78,12 +105,12 @@ extension KakaoBookSearchViewController: UITableViewDelegate, UITableViewDataSou
         
         let data = list[indexPath.row]
         
-        cell.titleLabel.text = "타이틀 레이블: \(data)"
-        cell.overviewLabel.text = "줄거리 레이블: \(data)"
-        cell.thumbnailImageView.backgroundColor = .brown
+        cell.titleLabel.text = data.title
+        cell.subTitleLabel.text = data.price.formatted()
+        cell.overviewLabel.text = data.contents
+        cell.thumbnailImageView.kf.setImage(with: URL(string: data.thumbnail))
         
         return cell
     }
-    
 }
 

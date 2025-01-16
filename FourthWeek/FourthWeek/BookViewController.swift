@@ -23,21 +23,6 @@ class BookViewController: UIViewController {
         super.viewDidLoad()
         
         // 이제 collectionView가 mainView에 있기 떄문에 이렇게 수정
-        mainView.collectionView.delegate = self
-        mainView.collectionView.dataSource = self
-    }
-}
-
-extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 100
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BookCollectionViewCell", for: indexPath) as! BookCollectionViewCell
         
-        cell.bookCoverImageView.layer.cornerRadius = 8
-        
-        return cell
     }
 }

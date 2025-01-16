@@ -9,7 +9,13 @@ import UIKit
 import SnapKit
 
 class BookView: BaseView {
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
+    lazy var collectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: "BookCollectionViewCell")
+        return collectionView
+    }()
     
     func createCollectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
@@ -33,7 +39,23 @@ class BookView: BaseView {
     override func configureView() {
         // 원래 BookVC에 있을땐 view.backgroundColor = .white 였는데, 여긴 view라서 self로 하거나 없어도됨
         backgroundColor = .white
+    }
+}
+
+extension BookView: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 100
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BookCollectionViewCell", for: indexPath) as! BookCollectionViewCell
         
-        collectionView.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: "BookCollectionViewCell")
+        cell.bookCoverImageView.layer.cornerRadius = 8
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(#function)
     }
 }

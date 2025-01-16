@@ -52,6 +52,7 @@ class KakaoBookSearchViewController: UIViewController {
         tableView.rowHeight = 120
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.prefetchDataSource = self
         tableView.register(KakaoBookSearchTableViewCell.self, forCellReuseIdentifier: KakaoBookSearchTableViewCell.id)
     }
     /*
@@ -62,7 +63,7 @@ class KakaoBookSearchViewController: UIViewController {
     func callRequest(query: String) {
         print(#function)
         
-        let url = "https://dapi.kakao.com/v3/search/book?query=\(query)"
+        let url = "https://dapi.kakao.com/v3/search/book?query=\(query)&size=50"
         let header: HTTPHeaders = [
             "Authorization": APIKey.kakao
         ]
@@ -93,6 +94,16 @@ extension KakaoBookSearchViewController: UISearchBarDelegate {
     }
 }
 
+extension KakaoBookSearchViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        print(#function, indexPaths)
+    }
+    
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        print(#function, indexPaths)
+        // 사용자가 페이지를 빠르게 스크롤하면, 중간에 지나가는 셀이 생기고, 그 셀에 대해서는 데이터 처리가 필요없을수도 있어, 이미지 다운로드 같은 기능을 취소하는 작업을 구현!
+    }
+}
 
 extension KakaoBookSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -101,6 +112,7 @@ extension KakaoBookSearchViewController: UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        print(#function, indexPath)
         guard let cell = tableView.dequeueReusableCell(withIdentifier: KakaoBookSearchTableViewCell.id, for: indexPath) as? KakaoBookSearchTableViewCell else { return UITableViewCell() }
         
         let data = list[indexPath.row]
@@ -112,5 +124,13 @@ extension KakaoBookSearchViewController: UITableViewDelegate, UITableViewDataSou
         
         return cell
     }
+    
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        print(#function, indexPath)
+//    }
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        print(#function, scrollView.contentSize.height, scrollView.contentOffset.y)
+//    }
 }
 

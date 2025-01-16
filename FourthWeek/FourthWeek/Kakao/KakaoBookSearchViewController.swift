@@ -9,13 +9,25 @@ import UIKit
 import Alamofire
 import Kingfisher
 import SnapKit
+/*
+ 페이지네이션
+ 1. 스크롤이 끝날 쯤 다음 페이지를 요청 (page += 1 후 callRequest)
+ 2. 이전 내용도 확인해야 해서 list.append로 수정
+ 
+ 추가해결할것
+ - 다른 검색어를 입력한 경우, 배열 초기화 + 1페이지로 다시 초기화 + 상단 스크롤
+ - 마지막 페이지인 경우 더이상 호출하지 않기
+ */
 
 class KakaoBookSearchViewController: UIViewController {
     
     let searchBar = UISearchBar()
     let tableView = UITableView()
     
-    var list: [Book.BookDetail] = []
+    var list: [BookDetail] = []
+    
+    var page = 1
+    var isEnd = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,23 +73,37 @@ class KakaoBookSearchViewController: UIViewController {
      3. 이미 검색어에 대한 결과가 나와있는 상태에서 동일한 요청을 하면?
      */
     func callRequest(query: String) {
-        print(#function)
         
-        let url = "https://dapi.kakao.com/v3/search/book?query=\(query)&size=50"
+        let url = "https://dapi.kakao.com/v3/search/book?query=\(query)&size=20&page=\(page)"
         let header: HTTPHeaders = [
             "Authorization": APIKey.kakao
         ]
+        
+        print(#function, url)
+        
         AF.request(url, method: .get, headers: header)
             .validate(statusCode: 200..<300)
             .responseDecodable(of: Book.self) { response in
                 
-                print(response.response?.statusCode)
+//                print(response.response?.statusCode)
                 
             switch response.result {
             case .success(let value):
                 print("✅SUCCESS")
-                self.list = value.documents
+                
+                self.isEnd = value.meta.is_end
+                
+                if self.page == 1 {
+                    self.list = value.documents
+                } else {
+                    self.list.append(contentsOf: value.documents)
+                }
+                
                 self.tableView.reloadData()
+                
+                if self.page == 1 {
+                    self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                }
             case .failure(let error):
                 print(error)
             }
@@ -86,8 +112,11 @@ class KakaoBookSearchViewController: UIViewController {
 }
 
 extension KakaoBookSearchViewController: UISearchBarDelegate {
+    // 검색 버튼 클릭시 무조건 통신되지 않고,
+    // 빈칸, 최소 1자 이상, 같은 글자에 대한 처리 필요!
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print(#function)
+        page = 1
         if let searchText = searchBar.text {
             callRequest(query: searchText)
         }
@@ -96,7 +125,15 @@ extension KakaoBookSearchViewController: UISearchBarDelegate {
 
 extension KakaoBookSearchViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        print(#function, indexPaths)
+//        print(#function, indexPaths)
+        
+        // size 20개 => 사용자가 마지막에 조회할 수 있는 셀의 indexPath는 [0,19]인것
+        for item in indexPaths {
+            if list.count - 2 == item.row && isEnd == false {
+                page += 1
+                callRequest(query: searchBar.text!)
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {

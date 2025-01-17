@@ -73,39 +73,22 @@ class KakaoBookSearchViewController: UIViewController {
      3. 이미 검색어에 대한 결과가 나와있는 상태에서 동일한 요청을 하면?
      */
     func callRequest(query: String) {
+//        let result = NetworkManager.shared.callKakaoBookTest(query: query, page: page)
+//        list = result.documents
         
-        let url = "https://dapi.kakao.com/v3/search/book?query=\(query)&size=20&page=\(page)"
-        let header: HTTPHeaders = [
-            "Authorization": APIKey.kakao
-        ]
-        
-        print(#function, url)
-        
-        AF.request(url, method: .get, headers: header)
-            .validate(statusCode: 200..<300)
-            .responseDecodable(of: Book.self) { response in
-                
-//                print(response.response?.statusCode)
-                
-            switch response.result {
-            case .success(let value):
-                print("✅SUCCESS")
-                
-                self.isEnd = value.meta.is_end
-                
-                if self.page == 1 {
-                    self.list = value.documents
-                } else {
-                    self.list.append(contentsOf: value.documents)
-                }
-                
-                self.tableView.reloadData()
-                
-                if self.page == 1 {
-                    self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-                }
-            case .failure(let error):
-                print(error)
+        NetworkManager.shared.callKakaoBookAPI(query: query, page: page) { value in
+            self.isEnd = value.meta.is_end
+            
+            if self.page == 1 {
+                self.list = value.documents
+            } else {
+                self.list.append(contentsOf: value.documents)
+            }
+            
+            self.tableView.reloadData()
+            
+            if self.page == 1 {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
             }
         }
     }

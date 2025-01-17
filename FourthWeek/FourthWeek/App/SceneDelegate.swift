@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)   // 빈 유리판 넣어주기
         
-        let nav = UINavigationController(rootViewController: BookViewController())    // navigationController embed
+        let nav = UINavigationController(rootViewController: VerticalScrollViewController())    // navigationController embed
         window?.rootViewController = nav // 첫 화면 지정해주기
         window?.makeKeyAndVisible() // 여기까지 구성해주는게 국룰(iOS12 이전 대응)
     }

@@ -45,10 +45,71 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         configureView()
+        
+        example2()
+//        example()
 //        concurrentAsync()
 //        concurrentSync()
 //        serialAsync()
 //        serialSync()
+    }
+    
+    // DispatchGroup
+    func example2() {
+        print("START")
+        
+        let group = DispatchGroup()
+        
+        DispatchQueue.global().async(group: group) {
+            for i in 1...100 {
+                print(i, terminator: " ")
+            }
+        }
+        
+        print("===1111===")
+        DispatchQueue.global().async(group: group) {
+            for i in 101...200 {
+                print(i, terminator: " ")
+            }
+        }
+        
+        print("===2222===")
+        DispatchQueue.global().async(group: group) {
+            for i in 201...300 {
+                print(i, terminator: " ")
+            }
+        }
+        print("END")
+        
+        // 보통 UI 업데이트를 여기서 함 => 그래서 queue를 .main으로 하
+        // Topic의 경우 동시에 갱신을 하고싶을때 이곳에서 함
+        group.notify(queue: .main) {
+            print("알바생 3명 끝! 신호받음!!")
+        }
+    }
+    
+    func example() {
+        print("START")
+        DispatchQueue.global(qos: .userInteractive).async {
+            for i in 1...100 {
+                print(i, terminator: " ")
+            }
+        }
+        
+        print("===1111===")
+        DispatchQueue.global(qos: .background).async {
+            for i in 101...200 {
+                print(i, terminator: " ")
+            }
+        }
+        
+        print("===2222===")
+        DispatchQueue.global().async {
+            for i in 201...300 {
+                print(i, terminator: " ")
+            }
+        }
+        print("END")
     }
     
     func concurrentAsync() {
@@ -156,21 +217,28 @@ class ViewController: UIViewController {
          여러 작업이 모두 종료되었다는 신호를 받기가 어렴
          */
         
+        let group = DispatchGroup()
+        
+        group.enter() // +1
         NetworkManager.shared.fetchImage { image in
             print("firstImageView Succeed")
-            self.firstImageView.image = image
-            
-            NetworkManager.shared.fetchImage { image in
-                print("secondImageView Succeed")
-                self.secondImageView.image = image
-            }
+            group.leave() // -1
         }
         
+        group.enter() // +1
+        NetworkManager.shared.fetchImage { image in
+            print("secondImageView Succeed")
+            group.leave() // -1
+        }
+        
+        group.enter() // +1
         NetworkManager.shared.fetchImage { image in
             print("thirdImageView Succeed")
-            self.thirdImageView.image = image
-            print("이미지 불러오기 끝!!")
+            group.leave() // -1
         }
-        print(#function, "END🔴")
+        
+        group.notify(queue: .main) {
+            print(#function, "END🔴")
+        }
     }
 }

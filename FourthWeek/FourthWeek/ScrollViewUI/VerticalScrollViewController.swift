@@ -57,15 +57,15 @@ class VerticalScrollViewController: UIViewController {
             make.height.equalTo(900)
         }
         
-        imageView.snp.makeConstraints { make in
-            make.bottom.horizontalEdges.equalTo(contentView).inset(20)
-            make.height.equalTo(200)
-        }
-        
         button.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(contentView).inset(20)
             make.top.equalTo(label.snp.bottom).offset(50)
             make.bottom.equalTo(imageView.snp.top).offset(-50)
+        }
+        
+        imageView.snp.makeConstraints { make in
+            make.bottom.horizontalEdges.equalTo(contentView).inset(20)
+            make.height.equalTo(200)
         }
     }
 }

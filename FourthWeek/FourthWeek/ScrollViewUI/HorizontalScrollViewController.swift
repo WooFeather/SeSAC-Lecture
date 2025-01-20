@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class HorizontalScrollViewController: UIViewController {
+class ₩: UIViewController {
 
     let scrollView = UIScrollView()
     let stackView = UIStackView()

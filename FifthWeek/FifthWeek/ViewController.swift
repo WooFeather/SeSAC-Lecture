@@ -23,6 +23,18 @@ class ViewController: UIViewController {
         return view
     }()
     
+    let secondImageView = {
+        let view = UIImageView()
+        view.backgroundColor = .red
+        return view
+    }()
+    
+    let thirdImageView = {
+        let view = UIImageView()
+        view.backgroundColor = .brown
+        return view
+    }()
+    
     let checkButton = {
         let btn = UIButton()
         btn.backgroundColor = .green
@@ -35,14 +47,8 @@ class ViewController: UIViewController {
         configureView()
 //        concurrentAsync()
 //        concurrentSync()
-        serialAsync()
+//        serialAsync()
 //        serialSync()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        print(#function)
     }
     
     func concurrentAsync() {
@@ -114,6 +120,8 @@ class ViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(firstImageView)
         view.addSubview(checkButton)
+        view.addSubview(secondImageView)
+        view.addSubview(thirdImageView)
         
         checkButton.snp.makeConstraints { make in
             make.size.equalTo(50)
@@ -125,27 +133,44 @@ class ViewController: UIViewController {
             make.centerX.top.equalTo(view.safeAreaLayoutGuide)
         }
         
+        secondImageView.snp.makeConstraints { make in
+            make.size.equalTo(200)
+            make.centerX.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(firstImageView.snp.bottom).offset(20)
+        }
+        
+        thirdImageView.snp.makeConstraints { make in
+            make.size.equalTo(200)
+            make.centerX.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(secondImageView.snp.bottom).offset(20)
+        }
+        
         checkButton.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
     }
     
     @objc
     func checkButtonTapped() {
         
-        print(#function)
-        // "https://picsum.photos/200/200"
-        let url = URL(string: "https://apod.nasa.gov/apod/image/2308/sombrero_spitzer_3000.jpg")!
+        /*
+         작업이 빠르게 끝날 수 있음
+         여러 작업이 모두 종료되었다는 신호를 받기가 어렴
+         */
         
-        // 다른 알바생: 네트워크 통신, 파일 다운로드
-        // 이 블럭 안에 들어가는 친구는 메인이 아닌 다른친구가 일함
-        DispatchQueue.global().async {
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    // UI를 그려주는 일은 main한테 다시 넘겨주기
-                    DispatchQueue.main.async {
-                        self.firstImageView.image = image
-                    }
-                }
+        NetworkManager.shared.fetchImage { image in
+            print("firstImageView Succeed")
+            self.firstImageView.image = image
+            
+            NetworkManager.shared.fetchImage { image in
+                print("secondImageView Succeed")
+                self.secondImageView.image = image
             }
         }
+        
+        NetworkManager.shared.fetchImage { image in
+            print("thirdImageView Succeed")
+            self.thirdImageView.image = image
+            print("이미지 불러오기 끝!!")
+        }
+        print(#function, "END🔴")
     }
 }

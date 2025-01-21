@@ -10,9 +10,11 @@
 		7969F13B2D3E47B50076C6CD /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 7969F13A2D3E47B50076C6CD /* Alamofire */; };
 		7969F13E2D3E47C20076C6CD /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7969F13D2D3E47C20076C6CD /* Kingfisher */; };
 		7969F1412D3E47CB0076C6CD /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7969F1402D3E47CB0076C6CD /* SnapKit */; };
+		7969F1DF2D3F253B0076C6CD /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 7969F1DE2D3F253B0076C6CD /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7969F1DE2D3F253B0076C6CD /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		79AB02012D3DD19500D273AA /* FifthWeek.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FifthWeek.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -54,6 +56,7 @@
 		79AB01F82D3DD19500D273AA = {
 			isa = PBXGroup;
 			children = (
+				7969F1DE2D3F253B0076C6CD /* .gitignore */,
 				79AB02032D3DD19500D273AA /* FifthWeek */,
 				79AB02022D3DD19500D273AA /* Products */,
 			);
@@ -139,6 +142,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7969F1DF2D3F253B0076C6CD /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -41,6 +41,9 @@ class GroupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        PhotoManager.shared.callRequest(api: .randomPhoto)
+        PhotoManager.shared.callRequest(api: .photo(query: "yd4daZHEtcA"))
+        
         configureView()
     }
     
@@ -79,31 +82,37 @@ class GroupViewController: UIViewController {
     @objc func checkButtonTapped() {
         print(#function)
         
-        let group = DispatchGroup()
-        
-        group.enter()
-        PhotoManager.shared.getRandomPhoto { photo in
-            self.firstValue = photo.urls.thumb
-            group.leave()
-        }
-        
-        group.enter()
-        PhotoManager.shared.getRandomPhoto { photo in
-            self.secondValue = photo.urls.thumb
-            group.leave()
-        }
-        
-        group.enter()
-        PhotoManager.shared.getRandomPhoto { photo in
-            self.thirdValue = photo.urls.thumb
-            group.leave()
-        }
-        
-        group.notify(queue: .main) {
-            print("불러오기 끝~!", Thread.isMainThread)
-            self.firstImageView.kf.setImage(with: URL(string: self.firstValue))
-            self.secondImageView.kf.setImage(with: URL(string: self.secondValue))
-            self.thirdImageView.kf.setImage(with: URL(string: self.thirdValue))
-        }
+//        let group = DispatchGroup()
+//        
+//        group.enter()
+//        PhotoManager.shared.getRandomPhoto { photo in
+//            self.firstValue = photo.urls.thumb
+//            group.leave()
+//        } failHandler: {
+//            group.leave()
+//        }
+//        
+//        group.enter()
+//        PhotoManager.shared.getRandomPhoto { photo in
+//            self.secondValue = photo.urls.thumb
+//            group.leave()
+//        } failHandler: {
+//            group.leave()
+//        }
+//        
+//        group.enter()
+//        PhotoManager.shared.getRandomPhoto { photo in
+//            self.thirdValue = photo.urls.thumb
+//            group.leave()
+//        } failHandler: {
+//            group.leave()
+//        }
+//        
+//        group.notify(queue: .main) {
+//            print("불러오기 끝~!", Thread.isMainThread)
+//            self.firstImageView.kf.setImage(with: URL(string: self.firstValue))
+//            self.secondImageView.kf.setImage(with: URL(string: self.secondValue))
+//            self.thirdImageView.kf.setImage(with: URL(string: self.thirdValue))
+//        }
     }
 }

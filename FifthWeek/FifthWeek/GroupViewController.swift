@@ -41,6 +41,39 @@ class GroupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // switch에서 default가 필요하거나 필요하지 않는 이유
+//        var number = Int.random(in: 1...3)
+//        
+//        switch number {
+//        case 1:
+//            print("1")
+//        case 2:
+//            print("2")
+//        case 3:
+//            print("3")
+//        default: // number의 값이 변경될 수 있기 때문에
+//            <#code#>
+//        }
+        
+        // @unknown: 라이브러리나 프레임워크에서 만들어진 열거형의 모든 멤버(case)를 처리했음에도 불구하고 @unknown default를 써야 추후에 case가 추가됐을때 대응해야 함
+//        let value = NSTextAlignment.center
+//        
+//        switch value {
+//            
+//        case .left:
+//            <#code#>
+//        case .center:
+//            <#code#>
+//        case .right:
+//            <#code#>
+//        case .justified:
+//            <#code#>
+//        case .natural:
+//            <#code#>
+//        @unknown default:
+//            <#code#>
+//        }
+        
         PhotoManager.shared.callRequest(api: .randomPhoto)
         PhotoManager.shared.callRequest(api: .photo(query: "yd4daZHEtcA"))
         

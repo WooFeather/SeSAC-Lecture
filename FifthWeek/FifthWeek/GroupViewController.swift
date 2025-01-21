@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class GroupViewController: UIViewController {
     
@@ -32,6 +33,10 @@ class GroupViewController: UIViewController {
         btn.backgroundColor = .green
         return btn
     }()
+    
+    var firstValue = ""
+    var secondValue = ""
+    var thirdValue = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,5 +78,32 @@ class GroupViewController: UIViewController {
     
     @objc func checkButtonTapped() {
         print(#function)
+        
+        let group = DispatchGroup()
+        
+        group.enter()
+        PhotoManager.shared.getRandomPhoto { photo in
+            self.firstValue = photo.urls.thumb
+            group.leave()
+        }
+        
+        group.enter()
+        PhotoManager.shared.getRandomPhoto { photo in
+            self.secondValue = photo.urls.thumb
+            group.leave()
+        }
+        
+        group.enter()
+        PhotoManager.shared.getRandomPhoto { photo in
+            self.thirdValue = photo.urls.thumb
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            print("불러오기 끝~!", Thread.isMainThread)
+            self.firstImageView.kf.setImage(with: URL(string: self.firstValue))
+            self.secondImageView.kf.setImage(with: URL(string: self.secondValue))
+            self.thirdImageView.kf.setImage(with: URL(string: self.thirdValue))
+        }
     }
 }

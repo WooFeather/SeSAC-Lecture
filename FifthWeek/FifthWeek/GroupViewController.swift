@@ -8,6 +8,10 @@
 import UIKit
 import Kingfisher
 
+//class User {
+//    static let name = "하이"
+//}
+
 class GroupViewController: UIViewController {
     
     let firstImageView = {
@@ -41,6 +45,15 @@ class GroupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        PhotoManager.shared.example4(a: Int.self)
+        
+//        User.self.name
+        
+        var age: Int = 3
+        var name: String = "안녕"
+        var test: String.Type = String.self
+        
+        // 1. 타입어노테이션으로 명시
         PhotoManager.shared.example(api: .randomPhoto) { (value: RandomPhoto) in
             print("랜덤포토 통신 성공")
             dump(value)
@@ -54,6 +67,15 @@ class GroupViewController: UIViewController {
         } failHandler: {
             print("통신 실패한 경우 얼럿")
         }
+        
+        // 2. 매개변수에 T 타입 명시
+        PhotoManager.shared.example2(api: .randomPhoto, type: RandomPhoto.self) { value in
+            print("랜덤포토 통신 성공")
+            dump(value)
+        } failHandler: {
+            print("통신 실패한 경우 얼럿")
+        }
+
         
 //        example(a: 7) { value in
 //            <#code#>

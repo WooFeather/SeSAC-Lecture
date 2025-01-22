@@ -41,7 +41,23 @@ class GroupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        example(CompletionHandler: <#T##(T) -> Void#>)
+        PhotoManager.shared.example(api: .randomPhoto) { (value: RandomPhoto) in
+            print("랜덤포토 통신 성공")
+            dump(value)
+        } failHandler: {
+            print("통신 실패한 경우 얼럿")
+        }
+
+        PhotoManager.shared.example(api: .topic(id: "wallpapers")) { (value: Topic) in
+            print("토픽 통신 성공")
+            dump(value)
+        } failHandler: {
+            print("통신 실패한 경우 얼럿")
+        }
+        
+//        example(a: 7) { value in
+//            <#code#>
+//        }
         
         Dummy(mainContents: "65", subContents: "67", others: 122)
         Dummy(mainContents: true, subContents: false, others: 8.9)

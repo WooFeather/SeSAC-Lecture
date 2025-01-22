@@ -14,9 +14,9 @@ import UIKit
 extension UIViewController {
     // 네모박스를 만들어주자
     
-    func example<T>(CompletionHandler: @escaping (T) -> Void) -> String {
-        return "안녕하세요"
-    }
+//    func example<T>(a: T, CompletionHandler: @escaping (T) -> Void) -> String {
+//        return "안녕하세요"
+//    }
     
     func plus<T: AdditiveArithmetic>(a: T, b: T) -> T {
         return a + b

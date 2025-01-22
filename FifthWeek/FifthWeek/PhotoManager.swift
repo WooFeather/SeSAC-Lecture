@@ -110,4 +110,20 @@ class PhotoManager {
                 }
             }
     }
+    
+    func example<T: Decodable>(api: UnsplashRequest,
+                               successHandler: @escaping (T) -> Void,
+                               failHandler: @escaping () -> Void
+    ) {
+        AF.request(api.endpoint, method: api.method, headers: api.header)
+            .validate(statusCode: 200..<500)
+            .responseDecodable(of: T.self) { response in
+                switch response.result {
+                case .success(let value):
+                    successHandler(value)
+                case .failure(let error):
+                    failHandler()
+                }
+            }
+    }
 }

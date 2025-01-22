@@ -149,3 +149,10 @@ class PhotoManager {
         print(a)
     }
 }
+
+//
+//class JackVC: SearchViewController {
+//    override func example() {
+//        <#code#>
+//    }
+//}

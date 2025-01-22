@@ -12,6 +12,10 @@ class SearchViewController: UIViewController {
 
     let textField = UITextField()
     
+    private func example() {    // 얘가 실행이 되는건지, 상속받아서 재정의한곳에서 되는건지 모름
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -41,6 +41,21 @@ class GroupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        example(CompletionHandler: <#T##(T) -> Void#>)
+        
+        Dummy(mainContents: "65", subContents: "67", others: 122)
+        Dummy(mainContents: true, subContents: false, others: 8.9)
+        
+        configureBorder(view: checkButton)
+        
+        let a = plus(a: 3, b: 2)
+        print(a)
+        
+        let b = plus(a: 4.6, b: 1.2)
+        
+//        let c = plus(a: "안녕", b: "하세요")
+        
+        
         // switch에서 default가 필요하거나 필요하지 않는 이유
 //        var number = Int.random(in: 1...3)
 //        

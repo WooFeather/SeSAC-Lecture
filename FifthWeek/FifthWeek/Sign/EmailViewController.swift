@@ -21,6 +21,22 @@ class EmailViewController: UIViewController {
         configureLayout()
          
         nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
+        
+        NotificationCenter.default.addObserver(
+            self, // 내 화면에서 내가 받을게
+            selector: #selector(jackReceivedNotification), // 받으면 어떤 기능 실행할래
+            name: NSNotification.Name("jack"), // 어떤 보따리의 신호를 받을거야?
+            object: nil
+        )
+    }
+    
+    @objc func jackReceivedNotification(value: NSNotification) {
+        // 이곳에 값 넣어주기
+        if let name = value.userInfo!["value"] as? String {
+            print(self, name)
+        } else {
+            print(self, "데이터 없음")
+        }
     }
     
     deinit {

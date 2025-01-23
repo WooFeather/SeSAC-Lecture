@@ -8,6 +8,10 @@
 import UIKit
 import SnapKit
 
+protocol PassDataDelegate {
+    func nicknameReceived(value: String)
+}
+
 class MainViewController: UIViewController {
    
     let statusLabel = UILabel()
@@ -23,7 +27,7 @@ class MainViewController: UIViewController {
          
         nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
         
-        profileButton.addTarget(self, action: #selector(closureButtonClicked), for: .touchUpInside)
+        profileButton.addTarget(self, action: #selector(delegateButtonClicked), for: .touchUpInside)
         
         // Notification을 통해 값을 받기
         NotificationCenter.default.addObserver(
@@ -32,6 +36,12 @@ class MainViewController: UIViewController {
             name: NSNotification.Name("jack"), // 어떤 보따리의 신호를 받을거야?
             object: nil
         )
+    }
+    
+    @objc func delegateButtonClicked() {
+        let vc = DelegateViewController()
+        vc.contents = self // 현재 내 클래스 그 자체를 넣어줌!
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func closureButtonClicked() {
@@ -112,3 +122,8 @@ class MainViewController: UIViewController {
 
 }
 
+extension MainViewController: PassDataDelegate {
+    func nicknameReceived(value: String) {
+        statusLabel.text = value
+    }
+}

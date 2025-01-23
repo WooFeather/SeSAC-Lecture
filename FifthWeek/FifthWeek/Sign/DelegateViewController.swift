@@ -1,20 +1,18 @@
 //
-//  ClosureViewController.swift
+//  DelegateViewController.swift
 //  FifthWeek
 //
 //  Created by 조우현 on 1/23/25.
 //
 
 import UIKit
-import SnapKit
 
-class ClosureViewController: UIViewController {
+class DelegateViewController: UIViewController {
 
-    private let emailTextField = SignTextField(placeholderText: "클로저를 통한 값전달")
+    private let emailTextField = SignTextField(placeholderText: "딜리게이트를 통한 값전달")
     private let nextButton = PointButton(title: "저장하기")
     
-    // 화면전환 시 값전달
-    var contents: ((String) -> Void)?
+    var contents: PassDataDelegate? // 이제 이 프로토콜을 채택한 클래스든 구조체든 다 들어올 수 있다
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,15 +21,16 @@ class ClosureViewController: UIViewController {
         configureLayout()
         
         nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
-        
-        
-//        emailTextField.text = contents
     }
     
     @objc private func nextButtonClicked() {
-        // 클로저를 통한 값 보내기
         print(#function)
-        contents?(emailTextField.text!)
+        // contents?(emailTextField.text!)
+        
+        // 동일한 인스턴스의 MainVC를 어떻게 가지고오지?
+        // MainViewController().nicknameReceived()
+        contents?.nicknameReceived(value: emailTextField.text!)
+        
         navigationController?.popViewController(animated: true)
     }
 

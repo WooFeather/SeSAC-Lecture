@@ -19,6 +19,17 @@ class NotificationViewController: UIViewController {
         configureLayout()
         
         nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(sesacRecived),
+            name: NSNotification.Name("sesac"),
+            object: nil
+        )
+    }
+    
+    @objc func sesacRecived() {
+        print(#function)
     }
     
     @objc func nextButtonClicked() {

@@ -50,6 +50,15 @@ class MainViewController: UIViewController {
     }
     
     @objc func profileButtonClicked() {
+        // 정방향으로 값 전달해보기
+        NotificationCenter.default.post(
+                name: NSNotification.Name("sesac"),
+                object: nil,
+                userInfo: [
+                    "myData": statusLabel.text!
+                ]
+        )
+        
         let vc = NotificationViewController()
         navigationController?.pushViewController(vc, animated: true)
     }

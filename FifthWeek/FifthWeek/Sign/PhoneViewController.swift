@@ -23,6 +23,10 @@ class PhoneViewController: UIViewController {
         nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
     }
     
+    deinit {
+        print(self)
+    }
+    
     @objc func nextButtonClicked() {
         navigationController?.pushViewController(NicknameViewController(), animated: true)
     }

@@ -23,6 +23,10 @@ class EmailViewController: UIViewController {
         nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
     }
     
+    deinit {
+        print(self)
+    }
+    
     @objc func nextButtonClicked() {
         navigationController?.pushViewController(PhoneViewController(), animated: true)
     }

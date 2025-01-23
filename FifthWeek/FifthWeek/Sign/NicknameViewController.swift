@@ -21,10 +21,28 @@ class NicknameViewController: UIViewController {
         configureLayout()
          
         nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
-    } 
+    }
+    
+    deinit {
+        print(self)
+    }
     
     @objc func nextButtonClicked() {
-        navigationController?.pushViewController(MainViewController(), animated: true)
+        // 뒤로 돌아가면 안되니까
+        // window의 rootViewController를 교체
+        
+        // scene & window를 어떻게 가져올까?
+        
+        // UIApplication.shared.windows.first 예전에 쓰던 코드 -> deprecated
+        
+        // UIApplication에서 windowScene을 가져오기 + 그중에서 첫 번째 scene을 가져오는 것 => extension으로 빼놓기
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else { return }
+        
+        window.rootViewController = UINavigationController(
+            rootViewController: MainViewController()
+        )
+        window.makeKeyAndVisible()
     }
     
     func configureLayout() {

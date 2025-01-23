@@ -28,7 +28,13 @@ class MainViewController: UIViewController {
     }
     
     @objc func nextButtonClicked() {
-        navigationController?.pushViewController(EmailViewController(), animated: true)
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else { return }
+        
+        window.rootViewController = UINavigationController(
+            rootViewController: EmailViewController()
+        )
+        window.makeKeyAndVisible()
     }
     
     func configureLayout() {

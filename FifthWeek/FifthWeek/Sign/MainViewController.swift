@@ -23,15 +23,25 @@ class MainViewController: UIViewController {
          
         nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
         
-        profileButton.addTarget(self, action: #selector(profileButtonClicked), for: .touchUpInside)
+        profileButton.addTarget(self, action: #selector(closureButtonClicked), for: .touchUpInside)
         
-        // Notification
+        // Notification을 통해 값을 받기
         NotificationCenter.default.addObserver(
             self, // 내 화면에서 내가 받을게
-            selector: #selector(jackReceivedNotification), // 받으면 어떤 기능 실행할래
+            selector: #selector(closureButtonClicked), // 받으면 어떤 기능 실행할래
             name: NSNotification.Name("jack"), // 어떤 보따리의 신호를 받을거야?
             object: nil
         )
+    }
+    
+    @objc func closureButtonClicked() {
+        let vc = ClosureViewController()
+        vc.contents = { value in
+            print("테스트 티비")
+            self.statusLabel.textColor = .blue
+            self.statusLabel.text = value
+        }
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func jackReceivedNotification(value: NSNotification) {

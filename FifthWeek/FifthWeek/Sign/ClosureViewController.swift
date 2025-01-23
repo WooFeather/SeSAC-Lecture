@@ -1,5 +1,5 @@
 //
-//  NotificationViewController.swift
+//  ClosureViewController.swift
 //  FifthWeek
 //
 //  Created by 조우현 on 1/23/25.
@@ -8,46 +8,33 @@
 import UIKit
 import SnapKit
 
-class NotificationViewController: UIViewController {
+class ClosureViewController: UIViewController {
 
-    let emailTextField = SignTextField(placeholderText: "노티피케이션을 통한 값전달")
-    let nextButton = PointButton(title: "저장하기")
+    private let emailTextField = SignTextField(placeholderText: "클로저를 통한 값전달")
+    private let nextButton = PointButton(title: "저장하기")
+    
+    var contents: ((String) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         view.backgroundColor = .white
+        
         configureLayout()
         
         nextButton.addTarget(self, action: #selector(nextButtonClicked), for: .touchUpInside)
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(sesacRecived),
-            name: NSNotification.Name("sesac"),
-            object: nil
-        )
-    }
-    
-    @objc func sesacRecived() {
-        print(#function)
-    }
-    
-    @objc func nextButtonClicked() {
-        // Notification을 통해 값을 보내기
-        NotificationCenter.default.post(
-                name: NSNotification.Name("jack"), // 보따리 이름 뭘로지을래
-                object: nil,
-                userInfo: [ // 어떤 정보들을 전달할래?
-                    "nickname": "하이",
-                    "value": emailTextField.text!
-                ]
-        )
         
+//        emailTextField.text = contents
+    }
+    
+    @objc private func nextButtonClicked() {
+        // 클로저를 통한 값 보내기
+        print(#function)
+        contents?(emailTextField.text!)
         navigationController?.popViewController(animated: true)
     }
-    
-    func configureLayout() {
+
+    private func configureLayout() {
         view.addSubview(emailTextField)
         view.addSubview(nextButton)
          

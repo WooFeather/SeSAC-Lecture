@@ -122,7 +122,7 @@ class PhotoManager {
                 switch response.result {
                 case .success(let value):
                     successHandler(value)
-                case .failure(let error):
+                case .failure(_):
                     failHandler()
                 }
             }
@@ -139,7 +139,7 @@ class PhotoManager {
                 switch response.result {
                 case .success(let value):
                     successHandler(value)
-                case .failure(let error):
+                case .failure(_):
                     failHandler()
                 }
             }

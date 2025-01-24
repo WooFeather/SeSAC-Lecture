@@ -21,6 +21,7 @@ class PosterTableViewCell: UITableViewCell {
 
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
 
+    // 모든 tableView의 layout이 동일하다면 static으로 선언해주는것도 좋을듯
     static private func layout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 120, height: 160)

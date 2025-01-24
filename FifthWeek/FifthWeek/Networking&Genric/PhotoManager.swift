@@ -25,7 +25,7 @@ enum UnsplashRequest {
     var endpoint: URL {
         switch self {
         case .randomPhoto:
-            return URL(string: baseURL + "photos/random")!
+            return URL(string: baseURL + "photos/random?count=10")!
         case .topic(let id):
             return URL(string: baseURL + "topics/\(id)")!
         case .photo(let query):
@@ -62,7 +62,7 @@ class PhotoManager {
     
     func getRandomPhoto(
         api: UnsplashRequest,
-        completionHandler: @escaping (RandomPhoto) -> Void,
+        completionHandler: @escaping ([RandomPhoto]) -> Void,
         failHandler: @escaping () -> Void
     ) {
         // parameters: 무조건 쿼리스트링은 아님!! HTTP Body? query string?
@@ -74,7 +74,7 @@ class PhotoManager {
             headers: api.header
         )
             .validate(statusCode: 200..<500)
-            .responseDecodable(of: RandomPhoto.self) { response in
+            .responseDecodable(of: [RandomPhoto].self) { response in
                 switch response.result {
                 case .success(let value):
                     print(value)

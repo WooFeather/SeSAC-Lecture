@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PosterViewController: UIViewController {
 
@@ -20,9 +21,12 @@ class PosterViewController: UIViewController {
     
     var list = ["test1", "test2", "test3"]
     
-    var detailList1 = ["star.fill", "pencil", "xmark", "heart"]
-    var detailList2 = ["pencil", "xmark", "heart"]
-    var detailList3 = ["star", "pencil", "xmark", "heart.fill"]
+    // 아예 빈배열로 하고 append를 해도 되지만, 일단 공간을 유지한태 해보자
+    var detailList: [[RandomPhoto]] = [
+        [],
+        [],
+        []
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +35,39 @@ class PosterViewController: UIViewController {
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        let group = DispatchGroup()
+        
+        group.enter()
+        PhotoManager.shared.getRandomPhoto(api: .randomPhoto) { photo in
+            self.detailList[0] = photo
+            group.leave()
+        } failHandler: {
+            print("실패했어요")
+            group.leave()
+        }
+        
+        group.enter()
+        PhotoManager.shared.getRandomPhoto(api: .randomPhoto) { photo in
+            self.detailList[1] = photo
+            group.leave()
+        } failHandler: {
+            print("실패했어요")
+            group.leave()
+        }
+        
+        group.enter()
+        PhotoManager.shared.getRandomPhoto(api: .randomPhoto) { photo in
+            self.detailList[2] = photo
+            group.leave()
+        } failHandler: {
+            print("실패했어요")
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            self.tableView.reloadData()
         }
     }
     
@@ -51,6 +88,7 @@ extension PosterViewController: UITableViewDelegate, UITableViewDataSource {
         cell.collectionView.delegate = self
         cell.collectionView.dataSource = self
         cell.collectionView.register(PosterCollectionViewCell.self, forCellWithReuseIdentifier: PosterCollectionViewCell.id)
+        cell.collectionView.reloadData()
         
         return cell
     }
@@ -58,29 +96,16 @@ extension PosterViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension PosterViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView.tag == 0 {
-            return detailList1.count
-        } else if collectionView.tag == 1 {
-            return detailList2.count
-        } else {
-            return detailList3.count
-        }
+        
+        return detailList[collectionView.tag].count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.id, for: indexPath) as! PosterCollectionViewCell
         
-        
-        if collectionView.tag == 0 {
-            let data = detailList1[indexPath.item]
-            cell.posterImageView.image = UIImage(systemName: data)
-        } else if collectionView.tag == 1 {
-            let data = detailList2[indexPath.item]
-            cell.posterImageView.image = UIImage(systemName: data)
-        } else {
-            let data = detailList3[indexPath.item]
-            cell.posterImageView.image = UIImage(systemName: data)
-        }
+        let data = detailList[collectionView.tag][indexPath.item]
+        let link = URL(string: data.urls.thumb)
+        cell.posterImageView.kf.setImage(with: link)
         
         return cell
     }

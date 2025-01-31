@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7969F13B2D3E47B50076C6CD /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 7969F13A2D3E47B50076C6CD /* Alamofire */; };
 		7969F13E2D3E47C20076C6CD /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7969F13D2D3E47C20076C6CD /* Kingfisher */; };
 		7969F1412D3E47CB0076C6CD /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7969F1402D3E47CB0076C6CD /* SnapKit */; };
 		7969F1DF2D3F253B0076C6CD /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 7969F1DE2D3F253B0076C6CD /* .gitignore */; };
+		79C6223A2D4C63F2008416F8 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 79C622392D4C63F2008416F8 /* Lottie */; };
+		79C6223D2D4C6402008416F8 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 79C6223C2D4C6402008416F8 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,8 +46,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				7969F1412D3E47CB0076C6CD /* SnapKit in Frameworks */,
+				79C6223D2D4C6402008416F8 /* Alamofire in Frameworks */,
 				7969F13E2D3E47C20076C6CD /* Kingfisher in Frameworks */,
-				7969F13B2D3E47B50076C6CD /* Alamofire in Frameworks */,
+				79C6223A2D4C63F2008416F8 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,9 +92,10 @@
 			);
 			name = FifthWeek;
 			packageProductDependencies = (
-				7969F13A2D3E47B50076C6CD /* Alamofire */,
 				7969F13D2D3E47C20076C6CD /* Kingfisher */,
 				7969F1402D3E47CB0076C6CD /* SnapKit */,
+				79C622392D4C63F2008416F8 /* Lottie */,
+				79C6223C2D4C6402008416F8 /* Alamofire */,
 			);
 			productName = FifthWeek;
 			productReference = 79AB02012D3DD19500D273AA /* FifthWeek.app */;
@@ -123,9 +126,10 @@
 			mainGroup = 79AB01F82D3DD19500D273AA;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				7969F1392D3E47B50076C6CD /* XCRemoteSwiftPackageReference "Alamofire" */,
 				7969F13C2D3E47C20076C6CD /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				7969F13F2D3E47CB0076C6CD /* XCRemoteSwiftPackageReference "SnapKit" */,
+				79C622382D4C63F2008416F8 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				79C6223B2D4C6402008416F8 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 79AB02022D3DD19500D273AA /* Products */;
@@ -368,14 +372,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		7969F1392D3E47B50076C6CD /* XCRemoteSwiftPackageReference "Alamofire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/Alamofire";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.10.2;
-			};
-		};
 		7969F13C2D3E47C20076C6CD /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -392,14 +388,25 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		79C622382D4C63F2008416F8 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.1;
+			};
+		};
+		79C6223B2D4C6402008416F8 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7969F13A2D3E47B50076C6CD /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7969F1392D3E47B50076C6CD /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
 		7969F13D2D3E47C20076C6CD /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7969F13C2D3E47C20076C6CD /* XCRemoteSwiftPackageReference "Kingfisher" */;
@@ -409,6 +416,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7969F13F2D3E47CB0076C6CD /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		79C622392D4C63F2008416F8 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 79C622382D4C63F2008416F8 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+		79C6223C2D4C6402008416F8 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 79C6223B2D4C6402008416F8 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

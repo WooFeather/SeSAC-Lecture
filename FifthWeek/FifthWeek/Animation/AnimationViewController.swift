@@ -7,8 +7,11 @@
 
 import UIKit
 import SnapKit
+import Lottie
 
 final class AnimationViewController: UIViewController {
+    
+    private let animationImageView = LottieAnimationView(name: "Test")
     
     private let logoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -63,14 +66,49 @@ final class AnimationViewController: UIViewController {
         logoImageView.alpha = 0
         logoImageView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)    // 1/10사이즈로 크기를 줄임
         emailTextField.alpha = 0
+        passwordTextField.alpha = 0
+        loginButton.alpha = 0
+        signUpLabel.alpha = 0
         
-        UIView.animate(withDuration: 5) {
+        UIView.animate(withDuration: 1.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5) {
             self.logoImageView.alpha = 1
             // scaleX을 1로 만들어주는 코드는 없지만, 아래의 transform으로 덮어씌워서 커지는 효과까지 적용됨
             self.logoImageView.transform = CGAffineTransform(rotationAngle: 500) // 360이 한바퀴
         } completion: { _ in
-            UIView.animate(withDuration: 3) {
-                self.emailTextField.alpha = 1
+            self.animationEmailTextField()
+        }
+    }
+    
+    private func animationEmailTextField() {
+        UIView.animate(withDuration: 1, delay: 3, options: [.autoreverse]) {
+            self.emailTextField.alpha = 1
+        } completion: { _ in
+            self.animationPasswordTextField()
+        }
+    }
+    
+    private func animationPasswordTextField() {
+        UIView.animate(withDuration: 3) {
+            self.passwordTextField.alpha = 1
+        } completion: { _ in
+            self.animationButton()
+        }
+    }
+    
+    private func animationButton() {
+        UIView.animate(withDuration: 3) {
+            self.loginButton.alpha = 1
+        } completion: { _ in
+            self.animationLabel()
+        }
+    }
+    
+    private func animationLabel() {
+        UIView.animate(withDuration: 3) {
+            self.signUpLabel.alpha = 1
+        } completion: { _ in
+            self.animationImageView.play { completed in
+                print("로띠 애니메이션 끝~!")
             }
         }
     }
@@ -102,6 +140,19 @@ final class AnimationViewController: UIViewController {
             make.top.equalTo(passwordTextField.snp.bottom).offset(30)
             make.left.right.equalTo(emailTextField)
             make.height.equalTo(44)
+        }
+        
+        signUpLabel.snp.makeConstraints { make in
+            make.top.equalTo(loginButton.snp.bottom).offset(30)
+            make.left.right.equalTo(emailTextField)
+            make.height.equalTo(44)
+        }
+        
+        view.addSubview(animationImageView)
+        
+        animationImageView.snp.makeConstraints { make in
+            make.size.equalTo(100)
+            make.bottom.centerX.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }

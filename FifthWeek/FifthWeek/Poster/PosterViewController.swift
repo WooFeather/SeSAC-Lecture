@@ -69,6 +69,7 @@ class PosterViewController: UIViewController {
         group.notify(queue: .main) {
             self.tableView.reloadData()
         }
+        print("♥️\(detailList[0])")
     }
     
     

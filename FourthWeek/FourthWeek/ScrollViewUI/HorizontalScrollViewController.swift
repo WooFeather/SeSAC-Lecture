@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ₩: UIViewController {
+class HorizontalScrollViewController: UIViewController {
 
     let scrollView = UIScrollView()
     let stackView = UIStackView()
@@ -57,7 +57,7 @@ class ₩: UIViewController {
         
         let label4 = UILabel()
         label4.text = "34354aasdfsadssafdsafdsa53456"
-        label4.backgroundColor = .orange
+        label4.backgroundColor = .brown
         label4.textColor = .white
         stackView.addArrangedSubview(label4)
         

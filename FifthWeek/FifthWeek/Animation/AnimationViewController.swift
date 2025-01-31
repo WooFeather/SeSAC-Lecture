@@ -36,14 +36,15 @@ final class AnimationViewController: UIViewController {
         return textField
     }()
     
-    private let loginButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("로그인", for: .normal)
-        button.backgroundColor = .systemPurple
-        button.setTitleColor(.white, for: .normal)
-        button.layer.cornerRadius = 5
-        return button
-    }()
+    private let loginButton = UIButton()
+//    : UIButton = {
+//        let button = UIButton(type: .system)
+//        button.setTitle("로그인", for: .normal)
+//        button.backgroundColor = .systemPurple
+//        button.setTitleColor(.white, for: .normal)
+//        button.layer.cornerRadius = 5
+//        return button
+//    }()
     
     private let signUpLabel: UILabel = {
         let label = UILabel()
@@ -51,14 +52,29 @@ final class AnimationViewController: UIViewController {
         label.textColor = .systemBlue
         label.backgroundColor = .white
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont(name: "S-CoreDream-9Black", size: 30)
         return label
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setLoginButton()
         setupViews()
         setupAnimations()
+        
+        // ex. 나눔고딕 등
+        for family in UIFont.familyNames {
+            print(family)
+            
+            // ex. 이텔릭체, 볼드체 등 => 실제 폰트 이름
+            for name in UIFont.fontNames(forFamilyName: family) {
+                print(">>> \(name)")
+            }
+        }
+    }
+    
+    private func setLoginButton() {
+        loginButton.configuration = .myStyle(title: "로그인하기", subTitle: "환영합니다")
     }
     
     private func setupAnimations() {
@@ -70,7 +86,7 @@ final class AnimationViewController: UIViewController {
         loginButton.alpha = 0
         signUpLabel.alpha = 0
         
-        UIView.animate(withDuration: 1.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5) {
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5) {
             self.logoImageView.alpha = 1
             // scaleX을 1로 만들어주는 코드는 없지만, 아래의 transform으로 덮어씌워서 커지는 효과까지 적용됨
             self.logoImageView.transform = CGAffineTransform(rotationAngle: 500) // 360이 한바퀴
@@ -80,7 +96,7 @@ final class AnimationViewController: UIViewController {
     }
     
     private func animationEmailTextField() {
-        UIView.animate(withDuration: 1, delay: 3, options: [.autoreverse]) {
+        UIView.animate(withDuration: 0.1, delay: 0, options: [.autoreverse]) {
             self.emailTextField.alpha = 1
         } completion: { _ in
             self.animationPasswordTextField()
@@ -88,7 +104,7 @@ final class AnimationViewController: UIViewController {
     }
     
     private func animationPasswordTextField() {
-        UIView.animate(withDuration: 3) {
+        UIView.animate(withDuration: 0.1) {
             self.passwordTextField.alpha = 1
         } completion: { _ in
             self.animationButton()
@@ -96,7 +112,7 @@ final class AnimationViewController: UIViewController {
     }
     
     private func animationButton() {
-        UIView.animate(withDuration: 3) {
+        UIView.animate(withDuration: 0.1) {
             self.loginButton.alpha = 1
         } completion: { _ in
             self.animationLabel()
@@ -104,7 +120,7 @@ final class AnimationViewController: UIViewController {
     }
     
     private func animationLabel() {
-        UIView.animate(withDuration: 3) {
+        UIView.animate(withDuration: 0.1) {
             self.signUpLabel.alpha = 1
         } completion: { _ in
             self.animationImageView.play { completed in

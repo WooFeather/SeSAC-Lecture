@@ -8,6 +8,10 @@
 import UIKit
 import SnapKit
 
+extension NSNotification.Name {
+    static let myName = NSNotification.Name("myName")
+}
+
 class NotificationViewController: UIViewController {
 
     let emailTextField = SignTextField(placeholderText: "노티피케이션을 통한 값전달")
@@ -36,7 +40,7 @@ class NotificationViewController: UIViewController {
     @objc func nextButtonClicked() {
         // Notification을 통해 값을 보내기
         NotificationCenter.default.post(
-                name: NSNotification.Name("jack"), // 보따리 이름 뭘로지을래
+            name: .myName, // 보따리 이름 뭘로지을래
                 object: nil,
                 userInfo: [ // 어떤 정보들을 전달할래?
                     "nickname": "하이",

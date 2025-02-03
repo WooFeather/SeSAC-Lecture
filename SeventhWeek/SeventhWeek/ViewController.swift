@@ -27,6 +27,37 @@ final class ViewController: UIViewController {
         // checkDeviceLocation() -> locationManager를 lazy로 선언한 경우 여기서 안해줘도 됨
         
         configureView()
+        
+        
+//        NetworkManager.shared.getLotto { <#Lotto#> in
+//            <#code#>
+//        } failHandler: {
+//            <#code#>
+//        }
+
+        
+        NetworkManager.shared.getLotto2 { lotto, error in
+            // 1. 하나라도 nil일 경우에 이 다음 코드가 실행이 안됨..?
+//            guard let lotto = lotto,
+//                  let error = error else { return }
+            
+            // 2. 이것도 마찬가지!!
+//            guard let lotto = lotto else {
+//                return
+//            }
+//            guard let error = error else {
+//                return
+//            }
+        }
+        
+        NetworkManager.shared.getLotto3 { response in
+            switch response {
+            case .success(_):
+                // lotto값에 대한 대응
+            case .failure(_):
+                // error alert를 띄워주기
+            }
+        }
     }
     
     private func configureView() {

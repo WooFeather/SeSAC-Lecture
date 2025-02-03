@@ -7,24 +7,53 @@
 
 import UIKit
 import CoreLocation
+import MapKit
+import SnapKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
     // 1. 위치 매니저 생성: 위치에 관련된 대부분을 담당
-    let locationManager = CLLocationManager()
+    lazy var locationManager = CLLocationManager()
+    
+    let locationButton = UIButton()
+    let mapView = MKMapView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        
         // 3. 위치 프로토콜 연결
         locationManager.delegate = self
         
+        // 최초 실행시 시스템 위치서비스 및 권한여부 확인
+        // checkDeviceLocation() -> locationManager를 lazy로 선언한 경우 여기서 안해줘도 됨
+        
+        configureView()
+    }
+    
+    private func configureView() {
+        view.addSubview(mapView)
+        
+        mapView.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(300)
+        }
+        
+        view.backgroundColor = .white
+        locationButton.backgroundColor = .red
+        view.addSubview(locationButton)
+        locationButton.snp.makeConstraints { make in
+            make.size.equalTo(50)
+            make.center.equalTo(view.safeAreaLayoutGuide)
+        }
+        locationButton.addTarget(self, action: #selector(locationButtonClicked), for: .touchUpInside)
+    }
+    
+    @objc
+    private func locationButtonClicked() {
         checkDeviceLocation()
     }
 
     // Alert: 시스템 위치서비스 활성화 여부 -> 권한 허용 Alert
-    func checkDeviceLocation() {
+    private func checkDeviceLocation() {
         DispatchQueue.global().async {
             // 시스템 위치서비스 활성화 여부 체크(타입메서드)
             if CLLocationManager.locationServicesEnabled() {
@@ -39,7 +68,7 @@ class ViewController: UIViewController {
     }
     
     // 현재 사용자의 위치 권한 상태 확인
-    func checkCurrentLocation() {
+    private func checkCurrentLocation() {
         let status = locationManager.authorizationStatus
         
         switch status {
@@ -61,6 +90,13 @@ class ViewController: UIViewController {
             print("오류 발생")
         }
     }
+    
+    private func setRegionAndAnnotation(center: CLLocationCoordinate2D) {
+        
+        let region =  MKCoordinateRegion(center: center, latitudinalMeters: 500, longitudinalMeters: 500)
+        
+        mapView.setRegion(region, animated: true)
+    }
 }
 
 // 2. 위치 프로토콜 선언
@@ -68,10 +104,16 @@ extension ViewController: CLLocationManagerDelegate {
     // 사용자의 위치를 성공적으로 가지고 온 경우
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print(#function)
-        print(locations)
-        print(locations.last?.coordinate) // 가장 최신 위치의 위경도 정보를 알 수 있음
+        // print(locations)
+        // print(locations.last?.coordinate) // 가장 최신 위치의 위경도 정보를 알 수 있음
         // 날씨 정보를 호출하는 API 호출 가능
         // 지도를 현재위치 중심으로 이동시키는 기능
+        
+        if let coordinate = locations.last?.coordinate {
+            setRegionAndAnnotation(center: coordinate)
+        } else {
+            // 기본 위치 지정(시청 등)
+        }
         
         // start를 했다면, 더이상 위치를 안받아와도 되는 시점에 stop을 외쳐줘야 함
         // ex. 날씨나 지도의 경우 어느 시점에만 위치를 받아오고 끝내면 되기 때문에 이렇게 바로 stop을 해줌
@@ -84,13 +126,13 @@ extension ViewController: CLLocationManagerDelegate {
         print(#function)
     }
     
-    // 사용자의 권한상태가 변경될 때
-    // ex. 허용했었지만 시스템에서 안함으로 바꾸는 경우
+    // 사용자의 권한상태가 변경될 때 ex. 허용했었지만 시스템에서 안함으로 바꾸는 경우
+    // locationManager 인스턴스가 생성이 될 때 ex. locationManager인스턴스를 lazy var로 선언하면 .notDetermine인 상태에도 해당 메서드가 실행됨
     // iOS14+
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         // NotDetermined 상태에서 "한 번 허용"을 눌렀을 경우 해당 메서드 호출
         print(#function)
-        checkDeviceLocation() // 질문...! 잘 이해 못함!!!!
+        checkDeviceLocation()
     }
     
     // iOS14 미만

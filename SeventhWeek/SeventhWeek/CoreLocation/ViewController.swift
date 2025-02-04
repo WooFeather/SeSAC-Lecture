@@ -36,28 +36,28 @@ final class ViewController: UIViewController {
 //        }
 
         
-        NetworkManager.shared.getLotto2 { lotto, error in
-            // 1. 하나라도 nil일 경우에 이 다음 코드가 실행이 안됨..?
+//        NetworkManager.shared.getLotto2 { lotto, error in
+//             1. 하나라도 nil일 경우에 이 다음 코드가 실행이 안됨..?
 //            guard let lotto = lotto,
 //                  let error = error else { return }
-            
-            // 2. 이것도 마찬가지!!
+//            
+//             2. 이것도 마찬가지!!
 //            guard let lotto = lotto else {
 //                return
 //            }
 //            guard let error = error else {
 //                return
 //            }
-        }
+//        }
         
-        NetworkManager.shared.getLotto3 { response in
-            switch response {
-            case .success(_):
-                // lotto값에 대한 대응
-            case .failure(_):
-                // error alert를 띄워주기
-            }
-        }
+//        NetworkManager.shared.getLotto3 { response in
+//            switch response {
+//            case .success(_):
+//                // lotto값에 대한 대응
+//            case .failure(_):
+//                // error alert를 띄워주기
+//            }
+//        }
     }
     
     private func configureView() {
@@ -106,7 +106,7 @@ final class ViewController: UIViewController {
         case .notDetermined:
             print("이 권한에서만 권한 문구 띄울 수 있음")
             
-            // Delegate의 해당 코드는 위치가 변할 때마다 계속 호출됨 ⇒ 이 메서드의 호출 정도를 관리하는 코드라고 생각하면 됨
+            // Delegate의 didUpdateLocations 메서드는 위치가 변할 때마다 계속 호출됨 ⇒ 이 메서드의 호출 정도를 관리하는 코드라고 생각하면 됨
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             
             // 사용할 경우 위치정보 허용 알럿을 띄우는 코드
@@ -161,7 +161,9 @@ extension ViewController: CLLocationManagerDelegate {
     // locationManager 인스턴스가 생성이 될 때 ex. locationManager인스턴스를 lazy var로 선언하면 .notDetermine인 상태에도 해당 메서드가 실행됨
     // iOS14+
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        // NotDetermined 상태에서 "한 번 허용"을 눌렀을 경우 해당 메서드 호출
+        // NotDetermined 상태에서 권한 상태가 변경됐을 때 호출
+        // ex. "앱을 사용하는 동안", "한번만", "허용안함" 등의 선택을 할 때
+        // ex. 추후에 설정앱에서 권한 설정을 변경할 때
         print(#function)
         checkDeviceLocation()
     }

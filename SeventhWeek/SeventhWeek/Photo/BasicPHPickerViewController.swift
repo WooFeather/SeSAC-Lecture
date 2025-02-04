@@ -48,9 +48,36 @@ class BasicPHPickerViewController: UIViewController {
         print(#function)
         
         var configuration = PHPickerConfiguration()
+        configuration.filter = .any(of: [.screenshots, .images])
+        configuration.selectionLimit = 3
+        configuration.mode = .default
         
         let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
         
         present(picker, animated: true)
+    }
+}
+
+extension BasicPHPickerViewController: PHPickerViewControllerDelegate {
+    // 사진 선택을 마치고 추가버튼을 눌렀을 때 호출
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        print(#function)
+        
+        if let itemProvider = results.first?.itemProvider {
+            // 객체를 로드할 수 있는지 확인
+            if itemProvider.canLoadObject(ofClass: UIImage.self) {
+                // 해당 객체를 로드할거야
+                itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+                    
+                    DispatchQueue.main.async {
+                        self.photoImageView.image = image as? UIImage
+                    }
+                    
+                }
+            }
+        }
+        
+        dismiss(animated: true)
     }
 }

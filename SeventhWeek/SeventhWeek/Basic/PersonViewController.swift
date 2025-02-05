@@ -15,7 +15,6 @@ struct Person {
 
 class PersonListViewController: UIViewController {
     // MARK: - Properties
-    private var people: [Person] = []
     
     private let tableView: UITableView = {
         let table = UITableView()
@@ -51,6 +50,8 @@ class PersonListViewController: UIViewController {
         stackView.distribution = .fillEqually
         return stackView
     }()
+    
+    private let viewModel = PersonViewModel()
      
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +59,15 @@ class PersonListViewController: UIViewController {
         setupConstraints()
         setupTableView()
         setupActions()
+        
+        navigationItem.title = viewModel.navigationTitle
+        loadButton.setTitle(viewModel.loadTitle, for: .normal)
+        resetButton.setTitle(viewModel.resetTitle, for: .normal)
+        
+        // 데이터가 변경이되면 tableView를 갱신
+        viewModel.people.bind { value in
+            self.tableView.reloadData()
+        }
     }
      
     private func setupUI() {
@@ -95,36 +105,27 @@ class PersonListViewController: UIViewController {
     
     // MARK: - Actions
     @objc private func loadButtonTapped() {
-        let newPeople = generateRandomPeople(count: 10)
-        people.append(contentsOf: newPeople)
-        tableView.reloadData()
+        // 버튼을 클릭했다는 사실만 뷰모델에 정해주기
+        viewModel.inputLoadButtonTapped.value = (())
     }
     
     @objc private func resetButtonTapped() {
-        people.removeAll()
+        viewModel.people.value.removeAll()
         tableView.reloadData()
     }
     
     // MARK: - Helpers
-    private func generateRandomPeople(count: Int) -> [Person] {
-        return [
-            Person(name: "James", age: Int.random(in: 20...70)),
-            Person(name: "Mary", age: Int.random(in: 20...70)),
-            Person(name: "John", age: Int.random(in: 20...70)),
-            Person(name: "Patricia", age: Int.random(in: 20...70)),
-            Person(name: "Robert", age: Int.random(in: 20...70))
-        ]
-    }
+    
 }
- 
+
 extension PersonListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return people.count
+        return viewModel.people.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PersonCell", for: indexPath)
-        let person = people[indexPath.row]
+        let person = viewModel.people.value[indexPath.row]
         cell.textLabel?.text = "\(person.name), \(person.age)세"
         return cell
     }

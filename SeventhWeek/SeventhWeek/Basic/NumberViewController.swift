@@ -8,27 +8,28 @@
 import UIKit
 import SnapKit
 
-class Jack {
+// 5. 다양한 타입이 value의 값으로 들어올 수 있도록 제네릭으로 수정
+class Field<T> {
     
     // 3. closure를 사용하는 방식으로 수정
-    private var closure: ((String) -> Void)?
+    private var closure: ((T) -> Void)?
     
     // 2. didSet을 활용해서 값이 변경될 때 신호를 받음
-    var name: String {
+    var value: T {
         didSet {
-            closure?(name)
+            closure?(value)
         }
     }
     
     // 1. init을 작성 (외부매개변수명 생략)
-    init(_ name: String) {
-        self.name = name
+    init(_ value: T) {
+        self.value = value
     }
     
     // 4. 값이 변경되었을 때 뿐 아니라 초기값(init)일때도 동일한 동작을 하기 위해 bind()라는 메서드 생성
-    func bind(test: @escaping (String) -> Void) {
-        test(name)
-        closure = test
+    func bind(closure: @escaping (T) -> Void) {
+        closure(value)
+        self.closure = closure
     }
 }
 
@@ -48,22 +49,28 @@ class NumberViewController: UIViewController {
         return label
     }()
        
+    let viewModel = NumberViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("viewDidLoad")
         
-        let a = Jack("고래밥")
-        
-        a.bind { example in
-            print("이름 변경되었음: \(example)")
-            self.navigationItem.title = example
+        // bind는 didSet의 동작을 한다고 생각하면 됨
+        // outputText 값이 바뀌면 어떤 동작을 할거야?
+        viewModel.outputText.bind { text in
+            print("outputText", text)
+            self.formattedAmountLabel.text = text
         }
         
-        a.name = "칙촉"
-        
-        a.name = "카스타드"
-        
-        
-        
+//        let a = Field("고래밥")
+//        
+//        a.bind { example in
+//            print("이름 변경되었음: \(example)")
+//            self.navigationItem.title = example
+//        }
+//        
+//        a.value = "칙촉"
+//        a.value = "카스타드"
         
         configureUI()
         configureConstraints()
@@ -72,12 +79,9 @@ class NumberViewController: UIViewController {
  
     @objc private func amountChanged() {
         print(#function)
-        // 로직     =>      뷰
-        // 공백일 때 => 값을 입력해주세요
-        // 숫자가 아닐 때 => 숫자를 입력해주세요
-        // 숫자 범위 설정 => 100만원 이하의 값을 작성해주세요
-        // 올바른 값일 때 콤마찍어주기 => 1,234,456
-        formattedAmountLabel.text = amountTextField.text
+        
+        // VC는 text를 그냥 VM로 넘겨줄 뿐, 그 안에서의 동작은 알 지 못함
+        viewModel.inputField.value = amountTextField.text
     }
 }
 

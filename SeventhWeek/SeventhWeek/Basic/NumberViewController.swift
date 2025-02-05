@@ -55,6 +55,10 @@ class NumberViewController: UIViewController {
         super.viewDidLoad()
         print("viewDidLoad")
         
+        configureUI()
+        configureConstraints()
+        configureActions()
+        
         // bind는 didSet의 동작을 한다고 생각하면 됨
         // outputText 값이 바뀌면 어떤 동작을 할거야?
         viewModel.outputText.bind { text in
@@ -62,19 +66,10 @@ class NumberViewController: UIViewController {
             self.formattedAmountLabel.text = text
         }
         
-//        let a = Field("고래밥")
-//        
-//        a.bind { example in
-//            print("이름 변경되었음: \(example)")
-//            self.navigationItem.title = example
-//        }
-//        
-//        a.value = "칙촉"
-//        a.value = "카스타드"
-        
-        configureUI()
-        configureConstraints()
-        configureActions()
+        // 받아온 Bool값을 통해 textColor를 지정
+        viewModel.outputTextColor.bind { color in
+            self.formattedAmountLabel.textColor = color ? .blue : .red
+        }
     }
  
     @objc private func amountChanged() {

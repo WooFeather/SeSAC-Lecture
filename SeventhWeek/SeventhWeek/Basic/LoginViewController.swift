@@ -27,7 +27,6 @@ class LoginViewController: UIViewController {
     private let validationLabel: UILabel = {
         let label = UILabel()
         label.textColor = .red
-        label.text = "유효성 레이블"
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 0
         return label
@@ -40,6 +39,7 @@ class LoginViewController: UIViewController {
         button.layer.cornerRadius = 5
         return button
     }()
+    private let viewModel = LoginViewModel()
       
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +47,14 @@ class LoginViewController: UIViewController {
         configureUI()
         configureConstraints()
         configureActions()
+        
+        viewModel.outputValidText.lazyBind { text in
+            self.validationLabel.text = text
+        }
+        
+        viewModel.outputValidButton.bind { value in
+            self.loginButton.isEnabled = value
+        }
     }
 
 
@@ -56,6 +64,9 @@ class LoginViewController: UIViewController {
 
     @objc private func textFieldDidChange() {
         print(#function)
+        
+        viewModel.inputID.value = idTextField.text
+        viewModel.inputPassword.value = passwordTextField.text
     }
     
 }

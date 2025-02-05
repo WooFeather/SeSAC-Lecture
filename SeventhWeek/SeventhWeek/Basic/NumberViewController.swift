@@ -26,9 +26,14 @@ class Field<T> {
         self.value = value
     }
     
-    // 4. 값이 변경되었을 때 뿐 아니라 초기값(init)일때도 동일한 동작을 하기 위해 bind()라는 메서드 생성
+    // bind에 작성한 구문이 바로 동작하게끔 하고 싶은 경우
     func bind(closure: @escaping (T) -> Void) {
-        closure(value)
+        closure(value) // 초기값을 처리해주기 위함
+        self.closure = closure
+    }
+    
+    // bind가 바로 동작하지 않도록 하고싶은 경우
+    func lazyBind(closure: @escaping (T) -> Void) {
         self.closure = closure
     }
 }
